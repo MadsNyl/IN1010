@@ -6,7 +6,6 @@ public class TestLegemiddel {
         Vanedannende vane = new Vanedannende("vanedannende", 150, 3, 1);
         Vanlig vanlig = new Vanlig("vanlig", 4000, 0);
 
-
     }
 
     public static boolean testLegemiddelId(Legemiddel legemiddel, int forventetLegemiddelId) {

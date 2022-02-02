@@ -1,10 +1,10 @@
 abstract public class Legemiddel {
     
-    private int id;
-    private String navn;
-    private int pris;
-    private double virkestoff;
-    private static int id_nummer = 0;
+    int id;
+    String navn;
+    int pris;
+    double virkestoff;
+    private static int id_nummer = 1;
 
     // konstruktør
     public Legemiddel(String navn, int pris, double virkestoff) {
