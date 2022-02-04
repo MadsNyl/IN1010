@@ -1,4 +1,4 @@
-abstract public class Legemiddel {
+abstract class Legemiddel {
     
     int id;
     String navn;
