@@ -12,6 +12,7 @@ public class Narkotisk extends Legemiddel {
         return styrke;
     }
 
+    // overskrider toString metode
     @Override
     public String toString() {
         return navn + "; " + pris + "; " + virkestoff + "; " + styrke + ";" ;

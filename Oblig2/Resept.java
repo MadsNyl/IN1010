@@ -6,13 +6,19 @@ abstract class Resept {
     int reit;
     private static int id_nummer = 1;
     
-    public Resept(Legemiddel legemiddel, int pasientId, int reit) {
+    public Resept(Legemiddel legemiddel, Lege lege, int pasientId, int reit) {
         this.legemiddel = legemiddel;
         this.pasientId = pasientId;
         this.reit = reit;
 
         id = id_nummer;
         id_nummer++;
+    }
+
+    // oversskriver toString metode
+    @Override
+    public String toString() {
+        return "Id: " + id + "; Legemiddel: " + legemiddel + "; PasientId: " + pasientId + "; Antall reit: " + reit;
     }
 
     // henter id
@@ -50,6 +56,6 @@ abstract class Resept {
     abstract public String farge();
 
     // returnerer pris som pasient må betale
-    abstract public int prisAaBetale(int pris);
+    abstract public int prisAaBetale(float pris);
 
 }

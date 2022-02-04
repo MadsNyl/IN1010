@@ -7,6 +7,9 @@ public class TestResepter {
         ArrayList<Resept> resepter = new ArrayList<Resept>();
         ArrayList<Legemiddel> legemidler = new ArrayList<Legemiddel>();
 
+        // oppretter instans av lege
+        Lege lege = new Lege("Mads");
+
         // oppretter legemiddel instanser og legger til i arrayList for hurtigere gjennomgang av tester
         Legemiddel legemiddel1 = new Vanlig("vanlig_medisin", 128, 10);
         legemidler.add(legemiddel1); 
@@ -20,15 +23,15 @@ public class TestResepter {
         legemidler.add(legemiddel5); 
 
         // oppretter resept instanser og legger til i arrayList for hurtigere gjennomgang av tester
-        Resept hvitResept = new HvitResept(legemiddel1, 1, 2); 
+        Resept hvitResept = new HvitResept(legemiddel1, lege, 1, 2); 
         resepter.add(hvitResept); 
-        Resept blaaResept = new BlaaResept(legemiddel2, 2, 0);
+        Resept blaaResept = new BlaaResept(legemiddel2, lege, 2, 0);
         resepter.add(blaaResept); 
-        Resept militerResept = new MiliterResept(legemiddel3, 3, 5);
+        Resept militerResept = new MiliterResept(legemiddel3, lege, 3, 5);
         resepter.add(militerResept); 
-        Resept pResept1 = new PResept(legemiddel4, 4);
+        Resept pResept1 = new PResept(legemiddel4, lege, 4);
         resepter.add(pResept1); 
-        Resept pResept2 = new PResept(legemiddel5, 5);
+        Resept pResept2 = new PResept(legemiddel5, lege, 5);
         resepter.add(pResept2);
 
         // test av id
@@ -99,6 +102,12 @@ public class TestResepter {
 
         // test av pris på resept
         System.out.println("Test av pris paa resept:");
+
+        System.out.println(testPrisPaaResept(blaaResept, 207, 52));
+        System.out.println(testPrisPaaResept(hvitResept, 200, 200));
+        System.out.println(testPrisPaaResept(militerResept, 200, 0));
+        System.out.println(testPrisPaaResept(pResept1, 108, 0));
+        System.out.println(testPrisPaaResept(pResept1, 200, 92));
         
 
 

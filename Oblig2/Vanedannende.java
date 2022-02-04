@@ -8,10 +8,12 @@ public class Vanedannende extends Legemiddel {
         this.styrke = styrke;
     }
 
+    // henter styrke
     public int hentVanedannendeStyrke() {
         return styrke;
     }
 
+    // overskriver toString metode
     @Override
     public String toString() {
         return navn + "; " + pris + "; " + virkestoff + "; " + styrke + ";" ;

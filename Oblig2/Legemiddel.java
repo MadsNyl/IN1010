@@ -17,22 +17,27 @@ abstract public class Legemiddel {
         id_nummer++;
     }
 
+    // henter id
     public int hentId() {
         return id;
     }
 
+    // henter navn
     public String hentNavn() {
         return navn;
     }
 
+    // henter pris
     public int hentPris() {
         return pris;
     }
 
+    // henter virkestoff
     public double hentVirkestoff() {
         return virkestoff;
     }
 
+    // setter ny pris
     public void settNyPris(int nyPris) {
         pris = nyPris;
     }
