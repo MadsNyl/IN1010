@@ -24,6 +24,11 @@ public class Integrasjonstest {
         Resept hvit = new HvitResept(vanlig, lege, 1, 2);
         Resept pResept = new PResept(vanlig, lege, 2);
         Resept miliResept = new MiliterResept(vanlig, lege, 3, 1);
+
+        // tester ut toString metodene
+        System.out.println(hvit.toString());
+        System.out.println(pResept.toString());
+        System.out.println(miliResept.toString());
     }
 
 }

@@ -4,10 +4,10 @@ public class Vanlig extends Legemiddel {
         super(navn, pris, virkestoff);
     }
 
-    // overskriver toString metode
+    // overskrider toString metode
     @Override
     public String toString() {
-        return navn + "; " + pris + "; " + virkestoff + ";";
+        return "Legemiddel: " + navn + "; Pris: " + pris + "; Virkestoff: " + virkestoff + ";";
     }   
 
 }
