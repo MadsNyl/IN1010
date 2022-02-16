@@ -1,9 +1,9 @@
 abstract class Legemiddel {
     
-    int id;
-    String navn;
-    int pris;
-    double virkestoff;
+    private int id;
+    protected String navn;
+    protected int pris;
+    protected double virkestoff;
     private static int id_nummer = 1;
 
     // konstruktør

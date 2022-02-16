@@ -2,7 +2,7 @@ public class Spesialist extends Lege implements Godkjenningsfritak {
     
     // extender Lege og implementerer godkjenningsfritak
 
-    String kontrollID;
+    private String kontrollID;
 
     public Spesialist (String navn, String kontrollID) {
         super(navn);

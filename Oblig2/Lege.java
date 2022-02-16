@@ -1,6 +1,6 @@
 public class Lege {
     
-    String navn;
+    protected String navn;
 
     public Lege(String navn) {
         this.navn = navn;

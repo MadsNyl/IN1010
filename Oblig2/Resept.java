@@ -1,9 +1,9 @@
 abstract class Resept {
     
-    int id;
-    Legemiddel legemiddel;
-    int pasientId;
-    int reit;
+    private int id;
+    protected Legemiddel legemiddel;
+    protected int pasientId;
+    protected int reit;
     private static int id_nummer = 1;
     
     public Resept(Legemiddel legemiddel, Lege lege, int pasientId, int reit) {
