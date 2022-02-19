@@ -27,13 +27,11 @@ public class Lenkeliste<T> implements Liste<T> {
         System.out.println("Peker på start" + peker.data);
         // pos - 1 for å få en mer brukervennlig aksessering
         // til listen med 1 som første posisjon (istedenfor 0)
-        System.out.println("Neste etter peker: " + start.neste);
+        System.out.println("Neste etter peker: " + start.neste.data);
 
         for (int i = 0; i < pos - 1; i++) {
             peker = peker.neste;
         }
-
-
 
         return peker.data;
     }
@@ -46,9 +44,16 @@ public class Lenkeliste<T> implements Liste<T> {
             start = ny;
             slutt = ny;
         } else {
+            slutt.neste = ny;
             ny.forrige = slutt;
             slutt = ny;
+            // System.out.println("Forrige node til slutt: " + slutt.forrige.data);
         }
+
+
+        // System.out.println("Ny node: " + ny.data);
+        // System.out.println("Start node: " + start.data);
+        // System.out.println("Slutt node: " + slutt.data);
 
         stoerrelse++;
     }
@@ -84,12 +89,16 @@ public class Lenkeliste<T> implements Liste<T> {
             for (int i = 0; i < pos - 1; i++) {
                 peker = peker.neste;
             }
+
+            System.out.println("Node til peker: " + peker.data);
+            System.out.println("Node før peker: " + peker.forrige.data);
+            System.out.println("Node etter peker: " + peker.neste.data);
+
+            peker = ny;
         }
 
-        System.out.println("Node før peker: " + peker.forrige.data);
-        System.out.println("Node etter peker: " + peker.data);
 
-        peker = ny;
+
     }
 
 

@@ -5,11 +5,21 @@ public class Hovedprogram {
 
         System.out.println(minListe.stoerrelse());
         minListe.leggTil("node 1");
+        System.out.println("-------");
         minListe.leggTil("node 2");
+        System.out.println("-------");
         minListe.leggTil("node 3");
+        System.out.println("-------");
+        minListe.leggTil("node 4");
+
+        minListe.sett(3, "node 5");
+        // System.out.println(minListe.stoerrelse());
+        // System.out.println(minListe.fjern());
         // minListe.leggTil("node 4");
-        System.out.println(minListe.stoerrelse());
-        System.out.println(minListe.hent(1));
+        // System.out.println(minListe.stoerrelse());
+        // System.out.println(minListe.fjern());
+        // System.out.println(minListe.stoerrelse());
+        System.out.println(minListe.hent(3));
         // System.out.println(minListe.hent(2));
         // System.out.println(minListe.hent(3));
         // minListe.sett(2, "node 5");
