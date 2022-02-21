@@ -23,20 +23,31 @@ public class Lenkeliste<T> implements Liste<T> {
     // hent element fra gitt posisjon
     @Override
     public T hent(int pos) {
-        Node peker = start;
-        System.out.println("Peker på start" + peker.data);
-        // pos - 1 for å få en mer brukervennlig aksessering
-        // til listen med 1 som første posisjon (istedenfor 0)
-        System.out.println("Neste etter peker: " + start.neste.data);
+        Node node = start;
 
-        for (int i = 0; i < pos - 1; i++) {
-            peker = peker.neste;
+        if (pos == 0 || pos > stoerrelse) {
+            System.out.println("Posisjon er ute av index.");
+            node = null;
         }
 
-        return peker.data;
+        // pos - 1 for å få en mer brukervennlig aksessering
+        // til listen med 1 som første posisjon (istedenfor 0)
+        for (int i = 0; i < pos - 1; i++) {
+            node = node.neste;
+        }
+
+        if (node.forrige != null) {
+            System.out.println("Forrige node: " + node.forrige.data);
+        }
+
+        if (node.neste != null) {
+            System.out.println("Neste node: " + node.neste.data);
+        }
+        System.out.println("Denne node: " + node.data);
+        return node.data;
     }
 
-    // legger til element på slutten av liste
+    // legger til element på slutten av listen
     @Override
     public void leggTil(T x) {
         Node ny = new Node(x);
@@ -47,19 +58,39 @@ public class Lenkeliste<T> implements Liste<T> {
             slutt.neste = ny;
             ny.forrige = slutt;
             slutt = ny;
-            // System.out.println("Forrige node til slutt: " + slutt.forrige.data);
         }
-
-
-        // System.out.println("Ny node: " + ny.data);
-        // System.out.println("Start node: " + start.data);
-        // System.out.println("Slutt node: " + slutt.data);
 
         stoerrelse++;
     }
 
     // legger til element på gitt posisjon
-    public void leggTil(int pos, T x) {}
+    public void leggTil(int pos, T x) {
+        Node node = this.navigoer(pos);
+        Node ny = new Node(x);
+
+        if (node == start) {
+            // hvis node er første node
+            ny.neste = start;
+            start.forrige = ny;
+            start = ny;
+        } else if (node == slutt) {
+            // hvis node er siste node
+            ny.forrige = slutt.forrige;
+            ny.neste = slutt;
+            slutt.forrige.neste = ny;
+            slutt = ny;  
+        } else {
+            // hvis noden er mellom start og slutt
+            ny.neste = node;
+            ny.forrige = node.forrige;
+            node.forrige.neste = ny;
+            node.forrige = ny;
+        }
+
+        stoerrelse++;
+
+
+    }
 
     // fjerner og retunerer første element
     @Override
@@ -79,26 +110,56 @@ public class Lenkeliste<T> implements Liste<T> {
 
     // sett inn og overskrid element på gitt posisjon
     public void sett(int pos, T x) {
+        Node node = this.navigoer(pos);
         Node ny = new Node(x);
-        Node peker = start;
 
-        if (stoerrelse == 1) {
+        
+        if (node == start) {
+            // hvis noden er første node
+            ny.neste = start.neste;
             start = ny;
-            slutt = ny;
+
+        } else if (node == slutt) {
+            // hvis node er siste node
+            System.out.println(ny.data);
+            ny.forrige = slutt.forrige;
+            slutt.forrige.neste = ny;
         } else {
-            for (int i = 0; i < pos - 1; i++) {
-                peker = peker.neste;
-            }
+            // hvis noden er mellom start og slutt
+            ny.neste = node.neste;
+            ny.forrige = node.forrige;
+            node.forrige.neste = ny;
+            node.neste.forrige = ny;
 
-            System.out.println("Node til peker: " + peker.data);
-            System.out.println("Node før peker: " + peker.forrige.data);
-            System.out.println("Node etter peker: " + peker.neste.data);
-
-            peker = ny;
         }
 
 
+    }
 
+    // finner posisjon til node
+    public Node navigoer(int pos) {
+        Node peker = start;
+
+        // hvis pos er utenfor rekkevidde
+        if (pos <= 0 || pos > stoerrelse) {
+            System.out.println("Index utenfor rekkevidde.");
+            peker = null;
+        } else if (pos == 1) {
+            // hvis index er på starten
+            peker = start;
+        } else if (pos == stoerrelse) {
+            // hvis index er på slutten
+            peker = slutt;
+        } else {
+            // hvis pos er mellom start og slutt
+           for (int i = 0; i < pos - 1; i++) {
+                peker = peker.neste;
+                // peker.forrige = peker.forrige
+           } 
+           
+        }
+
+        return peker;
     }
 
 
