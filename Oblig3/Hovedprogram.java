@@ -16,10 +16,10 @@ public class Hovedprogram {
 
         System.out.println();
 
-        System.out.println(minListe.toString());
-        // minListe.leggTil(3, "Ny node");
+        // System.out.println(minListe.toString());
+        minListe.leggTil(0, "Ny node");
         // System.out.println(minListe.fjern(2));
-        // minListe.hent(3);
+        System.out.println(minListe.hent(0));
 
         // minListe.sett(3, "node 5");
         // System.out.println(minListe.stoerrelse());

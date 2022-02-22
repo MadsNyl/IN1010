@@ -32,14 +32,16 @@ public class Lenkeliste<T> implements Liste<T> {
     public T hent(int pos) {
         Node node = start;
 
-        if (pos == 0 || pos > stoerrelse) {
-            System.out.println("Posisjon er ute av index.");
-            node = null;
+        if (pos < 0 || pos > stoerrelse - 1) {
+            throw new UgyldigListeIndeks(pos);
         }
 
+        if (pos == 0) {
+            return node.data;
+        }
         // pos - 1 for å få en mer brukervennlig aksessering
         // til listen med 1 som første posisjon (istedenfor 0)
-        for (int i = 0; i < pos - 1; i++) {
+        for (int i = 0; i < pos; i++) {
             node = node.neste;
         }
 
@@ -101,6 +103,11 @@ public class Lenkeliste<T> implements Liste<T> {
     public T fjern(int pos) {
         Node node = navigoer(pos);
 
+        // sjekk om listen er tom
+        if (stoerrelse <= 0) {
+            return null;
+        }
+
         if (node == start) {
             // hvis node er første node
             start.neste.forrige = null;
@@ -125,6 +132,12 @@ public class Lenkeliste<T> implements Liste<T> {
     @Override
     public T fjern() {
         T returverdi = start.data;
+
+        // sjekk om liste er tom
+        if (stoerrelse <= 0) {
+            return null;
+        }
+
         if (stoerrelse == 1) {
             start = null;
             slutt = null;
@@ -170,20 +183,18 @@ public class Lenkeliste<T> implements Liste<T> {
         Node peker = start;
 
         // hvis pos er utenfor rekkevidde
-        if (pos <= 0 || pos > stoerrelse) {
-            System.out.println("Index utenfor rekkevidde.");
-            peker = null;
-        } else if (pos == 1) {
+        if (pos < 0 || pos > stoerrelse - 1) {
+            throw new UgyldigListeIndeks(pos);
+        } else if (pos == 0) {
             // hvis index er på starten
             peker = start;
-        } else if (pos == stoerrelse) {
+        } else if (pos == stoerrelse - 1) {
             // hvis index er på slutten
             peker = slutt;
         } else {
             // hvis pos er mellom start og slutt
            for (int i = 0; i < pos - 1; i++) {
                 peker = peker.neste;
-                // peker.forrige = peker.forrige
            } 
            
         }
