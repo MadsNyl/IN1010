@@ -2,9 +2,9 @@ public class Lenkeliste<T> implements Liste<T> {
     
     // implementerer indre klasse Node
     class Node {
-        Node neste = null; // peker til neste node
-        Node forrige = null; // peker til forrige node
-        T data;
+        public Node neste = null; // peker til neste node
+        public Node forrige = null; // peker til forrige node
+        T data; // oppretter data for noden
         Node (T data) {
             this.data = data;
         }
@@ -88,8 +88,31 @@ public class Lenkeliste<T> implements Liste<T> {
         }
 
         stoerrelse++;
+    }
 
+    // fjern element fra gitt posisjon
+    public T fjern(int pos) {
+        Node node = navigoer(pos);
 
+        if (node == start) {
+            // hvis node er første node
+            start.neste.forrige = null;
+            start = start.neste;
+            return start.data;
+        } else if (node == slutt) {
+            // hvis node er siste node
+            slutt = slutt.forrige;
+            slutt.neste = null;
+            return slutt.data;
+        } else {
+            // hvis node er mellom start og slutt
+            node.neste.forrige = node.forrige;
+            node = node.neste;
+            node.neste = node.neste.neste;
+        }
+
+        stoerrelse--;
+        return node.data;
     }
 
     // fjerner og retunerer første element
@@ -161,10 +184,4 @@ public class Lenkeliste<T> implements Liste<T> {
 
         return peker;
     }
-
-
-
-    // fjern element fra gitt posisjon
-    public T fjern(int pos) {return null;}
-
 }

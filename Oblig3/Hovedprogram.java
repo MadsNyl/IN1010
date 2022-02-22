@@ -15,8 +15,9 @@ public class Hovedprogram {
         System.out.println();
 
         System.out.println();
-        minListe.leggTil(3, "Ny node");
-        minListe.hent(5);
+        // minListe.leggTil(3, "Ny node");
+        System.out.println(minListe.fjern(2));
+        minListe.hent(2);
 
         // minListe.sett(3, "node 5");
         // System.out.println(minListe.stoerrelse());
