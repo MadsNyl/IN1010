@@ -8,6 +8,13 @@ public class Lenkeliste<T> implements Liste<T> {
         Node (T data) {
             this.data = data;
         }
+
+        // to string metode for Node
+        @Override
+        public String toString()
+        {
+            return data.toString();
+        }
     }
 
     protected Node start = null;
@@ -107,8 +114,7 @@ public class Lenkeliste<T> implements Liste<T> {
         } else {
             // hvis node er mellom start og slutt
             node.neste.forrige = node.forrige;
-            node = node.neste;
-            node.neste = node.neste.neste;
+            node.forrige.neste = node.neste;
         }
 
         stoerrelse--;
@@ -183,5 +189,22 @@ public class Lenkeliste<T> implements Liste<T> {
         }
 
         return peker;
+    }
+
+    // overkjører toString metode
+    @Override
+    public String toString()
+    {
+        String streng = "";
+        Node peker = start;
+
+        // iterer gjennom listen med noder
+        for (int i = 0; i < stoerrelse; i++) {
+            streng += peker.toString();
+            streng += " ";
+            peker = peker.neste;
+        }
+
+        return streng;
     }
 }
