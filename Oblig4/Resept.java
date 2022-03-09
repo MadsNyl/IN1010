@@ -18,7 +18,7 @@ abstract class Resept {
     // oversskriver toString metode
     @Override
     public String toString() {
-        return "Id: " + id + "; Legemiddel: " + legemiddel + "; PasientId: " + pasient + "; Antall reit: " + reit;
+        return "Id: " + id + "; Legemiddel: " + legemiddel.toString() + "; PasientId: " + pasient.toString() + "; Antall reit: " + reit;
     }
 
     // henter id

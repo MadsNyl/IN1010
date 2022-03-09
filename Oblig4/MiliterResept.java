@@ -1,7 +1,9 @@
 public class MiliterResept extends HvitResept {
 
-    public MiliterResept(Legemiddel legemiddel, Lege lege, Pasient pasient, int reit) {
-        super(legemiddel, lege, pasient, reit);
+    public static final int REIT = 3;
+
+    public MiliterResept(Legemiddel legemiddel, Lege lege, Pasient pasient) {
+        super(legemiddel, lege, pasient, REIT);
     }
 
     // retunerer 100% rabatt på prisen pasienten må betale
@@ -12,7 +14,7 @@ public class MiliterResept extends HvitResept {
     // overskrider toString metode
     @Override
     public String toString() {
-        return "Legemiddel: " + legemiddel.toString() + "; " + "PasientId: " + pasient + "; " + "Antall reit: " + reit;
+        return "Legemiddel: " + legemiddel.toString() + "; " + "PasientId: " + pasient.toString() + "; " + "Antall reit: " + reit;
     }
 
 }

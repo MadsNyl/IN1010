@@ -17,7 +17,7 @@ public class HvitResept extends Resept {
     // overskrider toString metode
     @Override
     public String toString() {
-        return "Legemiddel: " + legemiddel.toString() + "; " + "PasientId: " + pasient + "; " + "Antall reit: " + reit;
+        return "Legemiddel: " + legemiddel.toString() + "; " + "PasientId: " + pasient.toString() + "; " + "Antall reit: " + reit;
     }
 
 }   

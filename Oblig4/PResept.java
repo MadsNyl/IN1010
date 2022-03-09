@@ -1,10 +1,9 @@
 public class PResept extends HvitResept {
     
-    public static final int REIT = 3;
     public static final int RABATT = 108;
 
-    public PResept(Legemiddel legemiddel, Lege lege, Pasient pasient) {
-        super(legemiddel, lege, pasient, REIT);
+    public PResept(Legemiddel legemiddel, Lege lege, Pasient pasient, int reit) {
+        super(legemiddel, lege, pasient, reit);
     }
 
     // returnerer rabatt på 108 kroner på prisen som pasient må betale
@@ -20,7 +19,7 @@ public class PResept extends HvitResept {
     // overskrider toString metode
     @Override
     public String toString() {
-        return "Legemiddel: " + legemiddel.toString() + "; " + "PasientId: " + pasient + "; " + "Antall reit: " + REIT;
+        return "Legemiddel: " + legemiddel.toString() + "; " + "PasientId: " + pasient.toString() + "; " + "Antall reit: " + reit;
     }
 
 }

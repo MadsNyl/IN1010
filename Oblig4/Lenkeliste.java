@@ -1,7 +1,6 @@
 import java.util.Iterator;
 
 abstract class Lenkeliste<T> implements Liste<T> {
-    
     // indre klasse Node
     class Node{
         public Node neste = null;
@@ -33,7 +32,6 @@ abstract class Lenkeliste<T> implements Liste<T> {
     protected Node start = null;
     protected Node slutt = null;
     protected int stoerrelse = 0;
-
 
     // overkjører iterator metode for å returnere et objekt av
     // LenkelisteIterator
@@ -129,12 +127,11 @@ abstract class Lenkeliste<T> implements Liste<T> {
             peker = slutt;
         } else {
             // hvis posisjon er mellom start og slutt
-            for (int i = 0; i < pos - 1; i++) {
+            for (int i = 0; i < pos; i++) {
                 peker = peker.neste;
             }
         }
 
         return peker;
     }
-
 }
