@@ -106,7 +106,7 @@ abstract class Lenkeliste<T> implements Liste<T> {
             peker = slutt;
         } else {
             // hvis posisjon er mellom start og slutt
-            for (int i = 0; i < pos - 1; i++) {
+            for (int i = 0; i < pos; i++) {
                 peker = peker.neste;
             }
         }

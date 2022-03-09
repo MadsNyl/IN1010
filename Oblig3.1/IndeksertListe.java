@@ -7,19 +7,16 @@ public class IndeksertListe<T> extends Lenkeliste<T> {
         
         if (stoerrelse() == 0) {
             start = ny;
-        } else if (node == start) {
-            // hvis pos er start
+        } else if (pos == 0) {
             ny.neste = start;
             start.forrige = ny;
             start = ny;
-        } else if (node == slutt) {
-            // hvis pos er siste element
-            ny.forrige = slutt.forrige;
+        } else if (pos == stoerrelse() - 1) {
             ny.neste = slutt;
+            ny.forrige = slutt.forrige;
             slutt.forrige.neste = ny;
-            slutt = ny;
+            slutt.forrige = ny;
         } else {
-            // hvis noden er mellom start og slutt
             ny.neste = node;
             ny.forrige = node.forrige;
             node.forrige.neste = ny;
@@ -66,8 +63,7 @@ public class IndeksertListe<T> extends Lenkeliste<T> {
         if (pos == 0) {
             return node.data;
         }
-        // pos - 1 for å få en mer brukervennlig aksessering
-        // til listen med 1 som første posisjon (istedenfor 0)
+
         for (int i = 0; i < pos; i++) {
             node = node.neste;
         }
