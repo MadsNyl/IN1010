@@ -1,7 +1,8 @@
 public class Pasient {
     
     private String navn, fodselsnummer;
-    private int ID, IDteller = 0;
+    private int ID;
+    private static int IDteller = 1;
     private IndeksertListe<Resept> reseptListe = new IndeksertListe<>();
 
     public Pasient(String navn, String fodselsnummer) {
@@ -9,7 +10,7 @@ public class Pasient {
         this.fodselsnummer = fodselsnummer;
         // oppretter in ID for hver pasient
         this.ID = IDteller; 
-        this.IDteller++;
+        IDteller++;
     }
 
     public int hentID() {
@@ -22,6 +23,12 @@ public class Pasient {
 
     public String hentFodselsnummer() {
         return fodselsnummer;
+    }
+
+    // overkjører toString metode
+    @Override
+    public String toString() {
+        return "ID: " + hentID() + "; navn: " + hentNavn() + "; fødselsnummer: " + hentFodselsnummer();
     }
 
 }
