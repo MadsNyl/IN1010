@@ -12,6 +12,16 @@ public class Lege implements Comparable<Lege> {
         return navn;
     }
 
+    // henter antall resepter
+    public int hentAntallResepter() {
+        int antall = 0;
+        for (Resept resept : hentUtskrevneResepter()) {
+            antall++;
+        }
+
+        return antall;
+    }
+
     // henter liste av resepter
     public IndeksertListe<Resept> hentUtskrevneResepter() {
         return utskrevneResepter;
@@ -87,6 +97,9 @@ public class Lege implements Comparable<Lege> {
     public int compareTo(Lege lege) {
         int teller = 0;
         String legeNavn = lege.hentNavn();
+        legeNavn = legeNavn.toLowerCase();
+        String navn = hentNavn();
+        navn = navn.toLowerCase();
 
         // itererer gjennon navnet på legen
         for (int i = 0; i < navn.length(); i++) {
@@ -104,8 +117,8 @@ public class Lege implements Comparable<Lege> {
         }
 
         // hvis navnene er like helt frem til legens navn er ferdig, men
-        // sammenlignets lege sitt navn er lengre, vil det returneres -1
-        if (teller > navn.length()) return -1;
+        // sammenlignets lege sitt navn er lengre, vil det returneres 1
+        if (teller > navn.length()) return 1;
 
         return 0;
     }

@@ -52,24 +52,6 @@ public class IndeksertListe<T> extends Lenkeliste<T> {
         }
     }
 
-    // henter element i gitt posisjon
-    public T hent(int pos) {
-        Node node = start;
-
-        if (pos < 0 || pos > stoerrelse - 1) {
-            throw new UgyldigListeindeks(pos);
-        }
-
-        if (pos == 0) {
-            return node.data;
-        }
-
-        for (int i = 0; i < pos; i++) {
-            node = node.neste;
-        }
-
-        return node.data;
-    }
 
     // fjerner elementet i gitt posisjon og returnerer det
     public T fjern(int pos) {

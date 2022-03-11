@@ -19,14 +19,17 @@ abstract class Lenkeliste<T> implements Liste<T> {
 
     // indre klasse Iterator
     class LenkelisteIterator implements Iterator<T> {
-
+        private int pos = 0;
         // overkjører next metode
         @Override
-        public T next() { return null; }
+        public T next() { 
+            pos++;
+            return hent(pos - 1);
+        }
 
         // overkjører hasNext metode
         @Override
-        public boolean hasNext() { return false; }
+        public boolean hasNext() { return pos < stoerrelse(); }
     }
 
     protected Node start = null;
@@ -68,6 +71,21 @@ abstract class Lenkeliste<T> implements Liste<T> {
     @Override
     public T hent() {
         return start.data;
+    }
+
+    // henter element i gitt posisjon
+    public T hent(int pos) {
+        Node node = start;
+
+        if (pos < 0 || pos > stoerrelse - 1) {
+            throw new UgyldigListeindeks(pos);
+        }
+
+        for (int i = 0; i < pos; i++) {
+            node = node.neste;
+        }
+
+        return node.data;
     }
 
     // fjerner første element i listen og returnerer det

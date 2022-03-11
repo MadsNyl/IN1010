@@ -3,13 +3,17 @@ import java.util.Scanner;
 
 public class Legesystem {
     
-    // oppretter indekserte lister for de ulike objektene
-    IndeksertListe<Pasient> pasientListe = new IndeksertListe<>();
-    IndeksertListe<Legemiddel> legemiddelListe = new IndeksertListe<>();
-    IndeksertListe<Lege> legeListe = new IndeksertListe<>();
-    IndeksertListe<Resept> reseptListe = new IndeksertListe<>();
+    public static void main(String[] args) throws UlovligUtskrift {
+        kjorProgram();
+    }
 
-    public void lesFil(String filnavn) {
+    public static void lesFil(String filnavn) throws UlovligUtskrift {
+        // oppretter indekserte lister for de ulike objektene
+        IndeksertListe<Pasient> pasientListe = new IndeksertListe<>();
+        IndeksertListe<Legemiddel> legemiddelListe = new IndeksertListe<>();
+        Prioritetskoe<Lege> legeListe = new Prioritetskoe<>();
+        IndeksertListe<Resept> reseptListe = new IndeksertListe<>();
+
         try {
             File fil = new File(filnavn);
             Scanner leser = new Scanner(fil);
@@ -96,17 +100,103 @@ public class Legesystem {
                     String[] reseptData = data.split(",");
                     String legeNavn = null;
 
+
                     // itererer gjennom legelisten for å finne riktig lege
-                    for (int i = 0; i < legeListe.stoerrelse(); i++) {
-                        Lege lege = legeListe.hent(i);
+                    for (Lege lege : legeListe) {
                         legeNavn = lege.hentNavn();
+
+                        // hvis legenavnet i resepten er lik en av legene i listen, så er det match
+                        if (legeNavn != null & legeNavn.equals(reseptData[1])) {
+                            // får tak i lege-objektet
+                            // legeobjekter oppretter en resept med data fra reseptData
+                            if (reseptData[3].contains("hvit")) {
+                                // itererer gjennom legemiddelListe for å finne legemiddel med riktig ID
+                                for (Legemiddel legemiddel : legemiddelListe) {
+                                    // ser etter match i ID
+                                    int sjekkLegemiddelId = Integer.parseInt(reseptData[0]);
+                                    int legemiddelID = legemiddel.hentId();
+
+                                    if (sjekkLegemiddelId == legemiddelID) { 
+                                        // iterere pasientliste for å finne riktig pasient
+                                        for (Pasient pasient : pasientListe) {
+                                            int sjekkPasientId = Integer.parseInt(reseptData[2]);
+                                            int pasientID = pasient.hentID(); 
+
+                                            if (sjekkPasientId == pasientID) {
+                                                int reit = Integer.parseInt(reseptData[4]);
+                                                // oppretter en hvit resept med legen
+                                                lege.skrivHvitResept(legemiddel, pasient, reit);
+                                            }
+                                        }
+                                    }
+                                }
+                            } else if (reseptData[3].contains("blaa")) {
+                                // itererer gjennom legemiddelListe for å finne legemiddel med riktig ID
+                                for (Legemiddel legemiddel : legemiddelListe) {
+                                    // ser etter match i ID
+                                    int sjekkLegemiddelId = Integer.parseInt(reseptData[0]);
+                                    int legemiddelID = legemiddel.hentId();
+
+                                    if (sjekkLegemiddelId == legemiddelID) { 
+                                        // iterere pasientliste for å finne riktig pasient
+                                        for (Pasient pasient : pasientListe) {
+                                            int sjekkPasientId = Integer.parseInt(reseptData[2]);
+                                            int pasientID = pasient.hentID(); 
+
+                                            if (sjekkPasientId == pasientID) {
+                                                int reit = Integer.parseInt(reseptData[4]);
+                                                // oppretter en blå resept med legen
+                                                lege.skrivBlaaResept(legemiddel, pasient, reit);
+                                            }
+                                        }
+                                    }
+                                }
+                            } else if (reseptData[3].contains("p")) {
+                                // itererer gjennom legemiddelListe for å finne legemiddel med riktig ID
+                                for (Legemiddel legemiddel : legemiddelListe) {
+                                    // ser etter match i ID
+                                    int sjekkLegemiddelId = Integer.parseInt(reseptData[0]);
+                                    int legemiddelID = legemiddel.hentId();
+
+                                    if (sjekkLegemiddelId == legemiddelID) { 
+                                        // iterere pasientliste for å finne riktig pasient
+                                        for (Pasient pasient : pasientListe) {
+                                            int sjekkPasientId = Integer.parseInt(reseptData[2]);
+                                            int pasientID = pasient.hentID(); 
+
+                                            if (sjekkPasientId == pasientID) {
+                                                int reit = Integer.parseInt(reseptData[4]);
+                                                // oppretter en P resept med legen
+                                                lege.skrivPResept(legemiddel, pasient, reit);
+                                            }
+                                        }
+                                    }
+                                }
+                            } else if (reseptData[3].contains("militaer")) {
+                                // itererer gjennom legemiddelListe for å finne legemiddel med riktig ID
+                                for (Legemiddel legemiddel : legemiddelListe) {
+                                    // ser etter match i ID
+                                    int sjekkLegemiddelId = Integer.parseInt(reseptData[0]);
+                                    int legemiddelID = legemiddel.hentId();
+
+                                    if (sjekkLegemiddelId == legemiddelID) { 
+                                        // iterere pasientliste for å finne riktig pasient
+                                        for (Pasient pasient : pasientListe) {
+                                            int sjekkPasientId = Integer.parseInt(reseptData[2]);
+                                            int pasientID = pasient.hentID(); 
+
+                                            if (sjekkPasientId == pasientID) {
+                                                // oppretter en militær resept med legen
+                                                lege.skrivMilResept(legemiddel, pasient);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
 
-                    // hvis legenavnet i resepten er lik en av legene i listen, så er det match
-                    if (legeNavn != null & legeNavn.equals(legeNavn)) {
-                        // legen oppretter en resept med informasjon fra reseptlinjen
 
-                    }
                 }
                 
 
@@ -114,9 +204,77 @@ public class Legesystem {
 
             leser.close();
         } catch (FileNotFoundException e) {
-            System.out.println("En feil oppsto.");
+            System.out.println("En feil oppsto. Kunne ikke finne filen.");
             e.printStackTrace();
         }
 
     }
+    
+    private static void kjorProgram() throws UlovligUtskrift { 
+        // starter opp program
+        System.out.println("----------  LEGESYSTEM  ----------\n");
+        System.out.println("Skriv inn et filnavn for opplastning: ");
+        Scanner tastatur = new Scanner(System.in);
+        String filnavn = tastatur.nextLine();
+        lesFil(filnavn);
+        kommandoMeny();
+        kommandoValg(tastatur);
+        tastatur.close();
+    }
+
+    // printer ut meny
+    private static void kommandoMeny() {
+        System.out.println("\n----------  LEGESYSTEM STARTET  ----------\n");
+        String utskrift = "";
+        utskrift += "Du har folgende valg: \n";
+        utskrift += "Skriv ut fullstendig oversikt (1): \n";
+        utskrift += "Opprett og legg til nye elementer [lege / pasient / resept / legemiddel] (2): \n";
+        utskrift += "Bruk eksisterende resept (3): \n";
+        utskrift += "Hent statistikk (4): \n";
+        utskrift += "Hent fildata (5): \n";
+        utskrift += "Avslutt programvare (0): \n";
+        System.out.println(utskrift);
+    }
+
+    // går gjennom menyvalg
+    private static void kommandoValg(Scanner tastatur) {
+        int valgTall = tastatur.nextInt();
+        switch (valgTall) {
+            case 0:
+                skrivUtOversikt();
+                break;
+
+            case 1:
+                System.out.println(1);
+                break;
+
+            case 2:
+                System.out.println(2);
+                break;
+            
+            case 3:
+                System.out.println(3);
+                break;
+
+            case 4:
+                System.out.println(4);
+                break;
+            
+            case 5:
+                System.out.println(5);
+                break;
+        
+            default:
+                System.out.println("Feil inntastning, velg et tall mellom 0 og 5.");
+                kommandoValg(tastatur);
+        }
+    }
+
+    // henter fullstendig oversikt over pasienter, leger, legemidler, resepter
+    private static void skrivUtOversikt() {
+
+    }
+
 }
+
+
