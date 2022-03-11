@@ -14,9 +14,9 @@ public class Vanedannende extends Legemiddel {
     }
 
     // overskrider toString metode
-    @Override
+        @Override
     public String toString() {
-        return "ID: " + id  + "; Navn: " + navn + "; Pris: " + pris + "; Virkestoff: " + virkestoff + "; Styrke: " + styrke + ";" ;
+        return  " - Id: " + id + "\n - Navn: " + navn + "\n - Pris: " + pris + "\n - Virkestoff: " + virkestoff + "\n - Styrke: " + styrke;
     }   
 
 }

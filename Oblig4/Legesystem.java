@@ -3,16 +3,17 @@ import java.util.Scanner;
 
 public class Legesystem {
     
+    // oppretter lenkelister for de ulike objektene
+    private static IndeksertListe<Pasient> pasientListe = new IndeksertListe<>();
+    private static IndeksertListe<Legemiddel> legemiddelListe = new IndeksertListe<>();
+    private static Prioritetskoe<Lege> legeListe = new Prioritetskoe<>();
+    private static IndeksertListe<Resept> reseptListe = new IndeksertListe<>();
+
     public static void main(String[] args) throws UlovligUtskrift {
         kjorProgram();
     }
 
-    public static void lesFil(String filnavn) throws UlovligUtskrift {
-        // oppretter indekserte lister for de ulike objektene
-        IndeksertListe<Pasient> pasientListe = new IndeksertListe<>();
-        IndeksertListe<Legemiddel> legemiddelListe = new IndeksertListe<>();
-        Prioritetskoe<Lege> legeListe = new Prioritetskoe<>();
-        IndeksertListe<Resept> reseptListe = new IndeksertListe<>();
+    private static void lesFil(String filnavn) throws UlovligUtskrift {
 
         try {
             File fil = new File(filnavn);
@@ -201,6 +202,7 @@ public class Legesystem {
                 
 
             }
+            System.out.println("Fil er lest inn, og legesystemet er oppdatert.\n");
 
             leser.close();
         } catch (FileNotFoundException e) {
@@ -241,11 +243,11 @@ public class Legesystem {
         int valgTall = tastatur.nextInt();
         switch (valgTall) {
             case 0:
-                skrivUtOversikt();
+                System.out.println("Avslutter programvaren.");
                 break;
 
             case 1:
-                System.out.println(1);
+                skrivUtOversikt();
                 break;
 
             case 2:
@@ -272,6 +274,25 @@ public class Legesystem {
 
     // henter fullstendig oversikt over pasienter, leger, legemidler, resepter
     private static void skrivUtOversikt() {
+
+        // skriver ut leger
+        System.out.println("\n----------  LEGER  ----------\n");
+
+        // skriver ut leger
+        for (Lege lege : legeListe) {
+            // skriv ut info om lege
+            System.out.println("\n----- Ny lege -----\n");
+            System.out.println(lege);
+
+            // skriver ut resept for hver lege
+            if (lege.hentAntallResepter() > 0) {
+                System.out.println("\n----- Resept(er) -----\n");
+                for (Resept resept : lege.hentUtskrevneResepter()) { 
+                    System.out.println("\nReseptID: " + resept.hentId());
+                    System.out.println(resept);
+                }
+            }   
+        }
 
     }
 

@@ -16,7 +16,7 @@ public class Prioritetskoe<T extends Comparable<T> > extends Lenkeliste<T> {
                 node = node.neste;
             }
             // hvis noden i listen er større enn ny node, så legges ny node inn i den posisjonen,
-            if (node.data.compareTo(x) > 0) {
+            if (node.data.compareTo(x) < 0) {
                 this.leggTil(i, x);
                 // stopper funksjen og returnerer.
                 return;

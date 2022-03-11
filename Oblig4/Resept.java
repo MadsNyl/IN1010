@@ -15,10 +15,9 @@ abstract class Resept {
         id_nummer++;
     }
 
-    // oversskriver toString metode
-    @Override
-    public String toString() {
-        return "Id: " + id + "; Legemiddel: " + legemiddel.toString() + "; PasientId: " + pasient.toString() + "; Antall reit: " + reit;
+    // henter type resept
+    public String hentType() {
+        return "Resept";
     }
 
     // henter id
@@ -57,5 +56,11 @@ abstract class Resept {
 
     // returnerer pris som pasient må betale
     abstract public int prisAaBetale(float pris);
+
+    // oversskriver toString metode
+    @Override
+    public String toString() {
+        return "Type: " + hentType() + "\nLegemiddel: \n" + legemiddel + "\nPasient: " + pasient + "\nAntall reit: " + reit;
+    }
 
 }

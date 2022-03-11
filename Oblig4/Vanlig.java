@@ -7,7 +7,7 @@ public class Vanlig extends Legemiddel {
     // overskrider toString metode
     @Override
     public String toString() {
-        return  "ID: " + id + "; Navn: " + navn + "; Pris: " + pris + "; Virkestoff: " + virkestoff + ";";
+        return  " - Id: " + id + "\n - Navn: " + navn + "\n - Pris: " + pris + "\n - Virkestoff: " + virkestoff;
     }   
 
 }

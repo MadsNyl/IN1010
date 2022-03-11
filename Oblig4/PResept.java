@@ -2,6 +2,12 @@ public class PResept extends HvitResept {
     
     public static final int RABATT = 108;
 
+    // henter type resept
+    @Override
+    public String hentType() {
+        return "P-Resept";
+    }
+
     public PResept(Legemiddel legemiddel, Lege lege, Pasient pasient, int reit) {
         super(legemiddel, lege, pasient, reit);
     }
@@ -16,10 +22,5 @@ public class PResept extends HvitResept {
         return Math.round(pris - RABATT);
     }
 
-    // overskrider toString metode
-    @Override
-    public String toString() {
-        return "Legemiddel: " + legemiddel.toString() + "; " + "PasientId: " + pasient.toString() + "; " + "Antall reit: " + reit;
-    }
 
 }

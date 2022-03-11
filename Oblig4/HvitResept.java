@@ -4,6 +4,12 @@ public class HvitResept extends Resept {
         super(legemiddel, lege, pasient, reit);
     }
 
+    // henter type resept
+    @Override
+    public String hentType() {
+        return "Hvit-Resept";
+    }
+
     // retunerer hvit som farge på resept
     public String farge() {
         return "Hvit";
@@ -12,12 +18,6 @@ public class HvitResept extends Resept {
     // returnerer pris som pasient må betale
     public int prisAaBetale(float pris) {
         return Math.round(pris);
-    }
-
-    // overskrider toString metode
-    @Override
-    public String toString() {
-        return "Legemiddel: " + legemiddel.toString() + "; " + "PasientId: " + pasient.toString() + "; " + "Antall reit: " + reit;
     }
 
 }   

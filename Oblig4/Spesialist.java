@@ -29,7 +29,7 @@ public class Spesialist extends Lege implements Godkjenningsfritak {
 
     @Override
     public String toString() {
-        return "Legenavn: " + navn + "; " + "KontrollID: " + kontrollID;
+        return "Legenavn: " + navn + "; \n" + "KontrollID: " + kontrollID;
     }
 
 }

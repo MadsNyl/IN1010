@@ -28,7 +28,7 @@ public class Pasient {
     // overkjører toString metode
     @Override
     public String toString() {
-        return "ID: " + hentID() + "; navn: " + hentNavn() + "; fødselsnummer: " + hentFodselsnummer();
+        return "\n - ID: " + hentID() + "\n - navn: " + hentNavn() + "\n - fødselsnummer: " + hentFodselsnummer();
     }
 
 }
