@@ -8,7 +8,7 @@ public class Narkotisk extends Legemiddel {
         this.styrke = styrke;
     }
 
-    public int hentNarkotiskStyrke() {
+    public int hentStyrke() {
         return styrke;
     }
 

@@ -128,5 +128,4 @@ public class Lege implements Comparable<Lege> {
     public String toString() {
         return "Legenavn: " + navn;
     }
-
 }

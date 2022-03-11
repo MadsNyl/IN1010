@@ -9,12 +9,12 @@ public class Vanedannende extends Legemiddel {
     }
 
     // henter styrke
-    public int hentVanedannendeStyrke() {
+    public int hentStyrke() {
         return styrke;
     }
 
     // overskrider toString metode
-        @Override
+    @Override
     public String toString() {
         return  " - Id: " + id + "\n - Navn: " + navn + "\n - Pris: " + pris + "\n - Virkestoff: " + virkestoff + "\n - Styrke: " + styrke;
     }   

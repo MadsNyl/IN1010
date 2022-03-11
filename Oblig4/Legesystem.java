@@ -251,7 +251,7 @@ public class Legesystem {
                 break;
 
             case 2:
-                System.out.println(2);
+                opprettElement(tastatur);
                 break;
             
             case 3:
@@ -294,6 +294,137 @@ public class Legesystem {
             }   
         }
 
+    }
+
+    // gir bruker mulighet til å opprette objekt av lege, pasient, resept eller legemiddel
+    private static void opprettElement(Scanner tastatur) {
+        // skriv ut overskrift
+        System.out.println("\n----------  OPPRETT ET ELEMENT  ----------\n");
+        String utskrift = "";
+        utskrift += " - Opprett en lege (1)\n";
+        utskrift += " - Opprett en pasient (2)\n";
+        utskrift += " - Opprett en resept (3)\n";
+        utskrift += " - Opprett et legemiddel (4)\n";
+        System.out.println(utskrift);
+        int tallValg = tastatur.nextInt();
+        tastatur.nextLine();
+
+        switch (tallValg) {
+            case 1:
+                opprettLege(tastatur);
+                break;
+            
+            case 2:
+                opprettPasient(tastatur);
+                break;
+            
+            case 3:
+                opprettResept(tastatur);
+                break;
+
+            case 4:
+                opprettLegemiddel(tastatur);
+                break;
+        
+            default:
+                break;
+        }
+
+    }
+
+    // oppretter et Lege-objekt
+    private static void opprettLege(Scanner tastatur) {
+        // spør etter navnet til legen
+        System.out.println("\n----- Oppretter en lege -----\n");
+        System.out.println("Hva er navnet til legen?");
+
+        String navn = tastatur.nextLine();
+
+        // spør om lege er spesialist
+        System.out.println("\nEr legen en spesialist? (J/N): \n");
+        String erSpesialist = tastatur.nextLine();
+
+        if (erSpesialist.contains("J")) {
+            System.out.println("\nOppgi en kontrollID: ");
+            String kontrollID = tastatur.nextLine();
+            Spesialist spesialist = new Spesialist(navn, kontrollID);
+            legeListe.leggTil(spesialist);
+            System.out.println("Din legespesisalist med navn: " + spesialist.hentNavn() + ", og ID: " + spesialist.hentKontrollID() + ", er lagt inn i systemet." );
+        } else if(erSpesialist.contains("N")) {
+            // oppretter et Lege-objekt
+            Lege lege = new Lege(navn);
+            legeListe.leggTil(lege);
+            System.out.println("Din lege med navn: " + lege.hentNavn() + ", er lagt inn i systemet.");
+        }
+        
+    }
+
+    // oppretter et Pasient-objekt
+    private static void opprettPasient(Scanner tastatur) {
+        System.out.println("\n----- Oppretter en pasient -----\n");
+        System.out.println("Hva er navnet til pasienten?");
+
+        String navn = tastatur.nextLine();
+
+        System.out.println("\nHva er pasienten sitt fodselsnummer?");
+        String fodselsnummer = tastatur.nextLine();
+
+        // oppretter et Pasient-objekt
+        Pasient pasient = new Pasient(navn, fodselsnummer);
+        pasientListe.leggTil(pasient);
+        System.out.println("Din pasient med navn: " + pasient.hentNavn() + ", og fodselsnummer: " + pasient.hentFodselsnummer() + ", er lagt inn i systemet.");
+    }
+
+    // oppretter et Resept-objekt
+    private static void opprettResept(Scanner tastatur) {
+        
+    }
+
+    // oppretter et Legemiddel-objekt
+    private static void opprettLegemiddel(Scanner tastatur) {
+        System.out.println("\n----- Oppretter et legemiddel -----\n");
+        // henter navn
+        System.out.println("Hva er navnet?");
+        String navn = tastatur.nextLine();
+        // henter pris
+        System.out.println("\nHva er prisen?");
+        int pris = tastatur.nextInt();
+        // henter virkestoff
+        System.out.println("\nHva er mengde virkestoff?");
+        int virkestoff = tastatur.nextInt();
+        // henter legemiddeltype
+        String utskrift = "";
+        utskrift += "\nVelg et legemiddel:";
+        utskrift += "\n - vanlig (1)";
+        utskrift += "\n - vanedannende (2)";
+        utskrift += "\n - narkotisk (3)";
+        System.out.println(utskrift);
+        int tallValg = tastatur.nextInt();
+
+        // oppretter Legemiddel-objekt
+        switch (tallValg) {
+            case 1:
+                Vanlig vanlig = new Vanlig(navn, pris, virkestoff);
+                legemiddelListe.leggTil(vanlig);
+                break;
+
+            case 2:
+                System.out.println("\nHva er styrken?");
+                int styrke = tastatur.nextInt();
+                Vanedannende vanedannende = new Vanedannende(navn, pris, virkestoff, styrke);
+                legemiddelListe.leggTil(vanedannende);
+                break;
+            
+            case 3:
+                System.out.println("\nHva er styrken?");
+                int styrke_n = tastatur.nextInt();
+                Narkotisk narkotisk = new Narkotisk(navn, pris, virkestoff, styrke_n);
+                legemiddelListe.leggTil(narkotisk);
+                break;
+        
+            default:
+                break;
+        }
     }
 
 }
