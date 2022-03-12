@@ -5,7 +5,7 @@ public class PResept extends HvitResept {
     // henter type resept
     @Override
     public String hentType() {
-        return "P-Resept";
+        return "p";
     }
 
     public PResept(Legemiddel legemiddel, Lege lege, Pasient pasient, int reit) {

@@ -1,5 +1,4 @@
 import java.io.*;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
@@ -269,7 +268,7 @@ public class Legesystem {
         utskrift += "Opprett og legg til nye elementer [lege / pasient / resept / legemiddel] (2): \n";
         utskrift += "Bruk eksisterende resept (3): \n";
         utskrift += "Hent statistikk (4): \n";
-        utskrift += "Hent fildata (5): \n";
+        utskrift += "Skriv all data til fil (5): \n";
         utskrift += "Avslutt programvare (0): \n";
         System.out.println(utskrift);
     }
@@ -299,7 +298,7 @@ public class Legesystem {
                 break;
             
             case 5:
-                System.out.println(5);
+                leggInnData(tastatur);
                 break;
         
             default:
@@ -716,6 +715,102 @@ public class Legesystem {
             // itererer gjennom resepter for å finne resepter som er narkotiske
             for (Resept resept : resepter) if (resept.hentLegemiddel() instanceof Narkotisk) teller++;
             if (teller > 0) System.out.println("\nPasient: " + pasient.hentNavn() + " (" + pasient.hentFodselsnummer() + ") - Antall resepter med narkotisk legemiddel: " + teller);
+        }
+    }
+
+    // skriver inn data til fil
+    private static void leggInnData(Scanner tastatur) {
+        System.out.println("\n----------  LASTER OPP DATA  ----------\n");
+        // oppretter fil for opplastning av data
+        opprettFil(tastatur);
+    }
+
+    // oppretter fil for opplastning av data
+    private static void opprettFil(Scanner tastatur) {
+        try {
+            System.out.println("Skriv inn et filnavn for datafil: \n");
+            String filNavn = tastatur.next();
+            tastatur.nextLine();
+            File fil = new File(filNavn);
+            // sjekker om fil allerede eksisterer
+            if (fil.createNewFile()) {
+                System.out.println("Fil laget: " + fil.getName());
+                skrivTilFil(filNavn);
+            }
+            else {
+                System.out.println("Filen " + fil.getName() + " eksisterer allerede. Vil du overskride den (J/N)?\n");
+                String valg = tastatur.nextLine();
+                if (valg.contains("J")) skrivTilFil(filNavn);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // skriver inn data til fil
+    private static void skrivTilFil(String filNavn) {
+        try {
+            // åpner for skriving inn på fil
+            FileWriter minSkriver = new FileWriter(filNavn);
+
+            // skriver inn data om pasienter
+            minSkriver.write("# Pasienter (navn, fnr)");
+            for (Pasient pasient : pasientListe) {
+                String navn = pasient.hentNavn();
+                String foedselsnummer = pasient.hentFodselsnummer();
+                minSkriver.write("\n" + navn + "," + foedselsnummer);
+            }
+
+            // skriver inn data om legemidler
+            minSkriver.write("\n# Legemidler (navn,type,pris,virkestoff,[styrke])");
+            for (Legemiddel legemiddel : legemiddelListe) {
+                String navn = legemiddel.hentNavn();
+                String type = legemiddel.hentType();
+                int pris = legemiddel.hentPris();
+                double virkestoff = legemiddel.hentVirkestoff();
+
+                if (legemiddel instanceof Vanlig) minSkriver.write("\n" + navn + "," + type + "," + pris + "," + virkestoff); 
+                else {
+                    int styrke = legemiddel.hentStyrke();
+                    minSkriver.write("\n" + navn + "," + type + "," + pris + "," + virkestoff + "," + styrke);
+                }
+            }
+
+            // skriver inn data om leger
+            minSkriver.write("\n# Leger (navn,kontrollid / 0 hvis vanlig lege)");
+            for (Lege lege : legeListe) {
+                String navn = lege.hentNavn();
+                
+                if (lege instanceof Spesialist) {
+                    Spesialist spesialist = (Spesialist) lege;
+                    String kontrollID = spesialist.hentKontrollID();
+                    minSkriver.write("\n" + navn + "," + kontrollID);
+                } else minSkriver.write("\n" + navn + ",0");
+            }
+
+            // skriver inn data om resepter
+            minSkriver.write("\n# Resepter (legemiddelNummer,legeNavn,pasientID,type,[reit])");
+            for (Resept resept : reseptListe) {
+                Legemiddel legemiddel = resept.hentLegemiddel();
+                int legemiddelNummer = legemiddel.hentId();
+                Lege lege = resept.hentLege();
+                String legeNavn = lege.hentNavn();
+                Pasient pasient = resept.hentPasient();
+                int pasientID = pasient.hentID();
+                String type = resept.hentType();
+
+                if (resept instanceof MiliterResept) minSkriver.write("\n" + legemiddelNummer + "," + legeNavn + "," + pasientID + "," + type);
+                else {
+                    int reit = resept.hentReit();
+                    minSkriver.write("\n" + legemiddelNummer + "," + legeNavn + "," + pasientID + "," + type + "," + reit);
+                }
+            }
+            
+            // lukker skriving
+            minSkriver.close();
+            System.out.println("\nAll data er skrevet inn på din datafil.\n");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -10,9 +10,7 @@ public class Spesialist extends Lege implements Godkjenningsfritak {
     }
 
     // henter kontrollID (bruker godkjenninsfritak interface)
-    public String hentKontrollID() {
-        return kontrollID;
-    }
+    public String hentKontrollID() { return kontrollID; }
 
     // overkjører metoden for å skrive ut blå resept for å la en spesialt få skrive ut narkotisk legemiddel
     @Override

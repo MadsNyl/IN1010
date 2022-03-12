@@ -7,10 +7,9 @@ public class Narkotisk extends Legemiddel {
         super(navn, pris, virkestoff);
         this.styrke = styrke;
     }
-
-    public int hentStyrke() {
-        return styrke;
-    }
+    
+    @Override
+    public int hentStyrke() { return styrke; }
 
     // overskrider hentType metode
     @Override

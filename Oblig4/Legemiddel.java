@@ -21,27 +21,20 @@ abstract class Legemiddel {
     public String hentType() { return "Legemiddel"; }
 
     // henter id
-    public int hentId() {
-        return id;
-    }
+    public int hentId() { return id; }
 
     // henter navn
-    public String hentNavn() {
-        return navn;
-    }
+    public String hentNavn() { return navn; }
 
     // henter pris
-    public int hentPris() {
-        return pris;
-    }
+    public int hentPris() { return pris; }
 
     // henter virkestoff
-    public double hentVirkestoff() {
-        return virkestoff;
-    }
+    public double hentVirkestoff() { return virkestoff; }
+
+    // henter styrke
+    public int hentStyrke() { return 0; }
 
     // setter ny pris
-    public void settNyPris(int nyPris) {
-        pris = nyPris;
-    }
+    public void settNyPris(int nyPris) { pris = nyPris; }
 }

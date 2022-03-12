@@ -9,9 +9,8 @@ public class Vanedannende extends Legemiddel {
     }
 
     // henter styrke
-    public int hentStyrke() {
-        return styrke;
-    }
+    @Override
+    public int hentStyrke() { return styrke; }
 
     // overskrider hentType metode
     @Override

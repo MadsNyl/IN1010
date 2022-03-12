@@ -9,7 +9,7 @@ public class MiliterResept extends HvitResept {
     // henter type resept
     @Override
     public String hentType() {
-        return "Militaer-Resept";
+        return "militaer";
     }
 
     // retunerer 100% rabatt på prisen pasienten må betale

@@ -8,7 +8,7 @@ public class BlaaResept extends Resept {
     // henter type resept
     @Override
     public String hentType() {
-        return "Blaa-Resept";
+        return "blaa";
     }
 
     // retunerer hvit som farge på resept
