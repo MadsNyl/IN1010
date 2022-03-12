@@ -13,6 +13,12 @@ public class Pasient {
         IDteller++;
     }
 
+    // hent reseptlist
+    public IndeksertListe<Resept> hentReseptListe() { return reseptListe; }
+
+    // legg til resept i liste
+    public void leggTilResept(Resept resept) { reseptListe.leggTil(resept); }
+
     public int hentID() {
         return ID;
     }

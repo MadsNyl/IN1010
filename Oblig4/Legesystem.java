@@ -128,7 +128,8 @@ public class Legesystem {
                                             if (sjekkPasientId == pasientID) {
                                                 int reit = Integer.parseInt(reseptData[4]);
                                                 // oppretter en hvit resept med legen
-                                                lege.skrivHvitResept(legemiddel, pasient, reit);
+                                                Resept resept = lege.skrivHvitResept(legemiddel, pasient, reit);
+                                                pasient.leggTilResept(resept);
                                             }
                                         }
                                     }
@@ -149,7 +150,8 @@ public class Legesystem {
                                             if (sjekkPasientId == pasientID) {
                                                 int reit = Integer.parseInt(reseptData[4]);
                                                 // oppretter en blå resept med legen
-                                                lege.skrivBlaaResept(legemiddel, pasient, reit);
+                                                Resept resept = lege.skrivBlaaResept(legemiddel, pasient, reit);
+                                                pasient.leggTilResept(resept);
                                             }
                                         }
                                     }
@@ -170,7 +172,8 @@ public class Legesystem {
                                             if (sjekkPasientId == pasientID) {
                                                 int reit = Integer.parseInt(reseptData[4]);
                                                 // oppretter en P resept med legen
-                                                lege.skrivPResept(legemiddel, pasient, reit);
+                                                Resept resept = lege.skrivPResept(legemiddel, pasient, reit);
+                                                pasient.leggTilResept(resept);
                                             }
                                         }
                                     }
@@ -190,7 +193,8 @@ public class Legesystem {
 
                                             if (sjekkPasientId == pasientID) {
                                                 // oppretter en militær resept med legen
-                                                lege.skrivMilResept(legemiddel, pasient);
+                                                Resept resept = lege.skrivMilResept(legemiddel, pasient);
+                                                pasient.leggTilResept(resept);
                                             }
                                         }
                                     }
@@ -281,7 +285,7 @@ public class Legesystem {
                 break;
             
             case 3:
-                System.out.println(3);
+                brukResept(tastatur);
                 break;
 
             case 4:
@@ -506,6 +510,7 @@ public class Legesystem {
         // oppretter en hvit resept
         Resept resept = lege.skrivHvitResept(legemiddel, pasient, antallReit);
         reseptListe.leggTil(resept);
+        pasient.leggTilResept(resept);
 
         System.out.println("Det er nå opprettet en ny hvit resept.");
 
@@ -520,6 +525,7 @@ public class Legesystem {
         // oppretter en blå resept
         Resept resept = lege.skrivBlaaResept(legemiddel, pasient, antallReit);
         reseptListe.leggTil(resept);
+        pasient.leggTilResept(resept);
 
         System.out.println("Det er nå opprettet en ny blaa resept.");
     }
@@ -533,6 +539,7 @@ public class Legesystem {
         // oppretter en p resept
         Resept resept = lege.skrivPResept(legemiddel, pasient, antallReit);
         reseptListe.leggTil(resept);
+        pasient.leggTilResept(resept);
 
         System.out.println("Det er nå opprettet en ny P resept.");
     }
@@ -543,6 +550,7 @@ public class Legesystem {
         // oppretter en militær resept
         Resept resept = lege.skrivMilResept(legemiddel, pasient);
         reseptListe.leggTil(resept);
+        pasient.leggTilResept(resept);
 
         System.out.println("Det er nå opprettet en ny militaer resept.");
     }
@@ -597,6 +605,38 @@ public class Legesystem {
         }
     }
 
+    // lar bruker bruke en eksisterende resept
+    private static void brukResept(Scanner tastatur) {
+        System.out.println("\n----------  BRUK RESEPT ----------\n");
+
+        // henter pasienter og gir et valg
+        int teller = 0;
+        System.out.println("Hvilken pasient vil du se resepter for?\n");
+        for (Pasient element : pasientListe) {
+            System.out.println(" - [" + teller + "] " + element.hentNavn() + " (" + element.hentFodselsnummer() + ")\n");
+            teller++;
+        }
+        int valg = tastatur.nextInt();
+        Pasient pasient = pasientListe.hent(valg);
+        System.out.println("Valgt pasient: " + pasient.hentNavn() + " (" + pasient.hentFodselsnummer() + ")");
+
+        // henter resepter til pasienten
+        int teller_r = 0;
+        System.out.println("Hvilken resept vil du bruke?\n");
+        IndeksertListe<Resept> resepter = pasient.hentReseptListe();
+        for (Resept element : resepter) {
+            Legemiddel legemiddel = element.hentLegemiddel();
+            System.out.println(" - [" + teller_r + "] " + legemiddel.hentNavn() + " (" + element.hentReit()+ " reit)\n");
+            teller_r++;
+        }
+        int valg_r = tastatur.nextInt();
+        Resept resept = resepter.hent(valg_r);
+        // bruker resepten en gang
+        Legemiddel legemiddel = resept.hentLegemiddel();
+        resept.bruk();
+        System.out.println("Brukte resept paa " + legemiddel.hentNavn() + ". Antall gjenvaerende reit: " + resept.hentReit());
+        
+    }
 }
 
 
