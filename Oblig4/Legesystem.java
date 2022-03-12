@@ -15,6 +15,7 @@ public class Legesystem {
         kjorProgram();
     }
 
+    // leser inn data fra fil
     private static void lesFil(String filnavn) throws UlovligUtskrift {
 
         try {
@@ -130,6 +131,7 @@ public class Legesystem {
                                                 // oppretter en hvit resept med legen
                                                 Resept resept = lege.skrivHvitResept(legemiddel, pasient, reit);
                                                 pasient.leggTilResept(resept);
+                                                reseptListe.leggTil(resept);
                                             }
                                         }
                                     }
@@ -152,6 +154,7 @@ public class Legesystem {
                                                 // oppretter en blå resept med legen
                                                 Resept resept = lege.skrivBlaaResept(legemiddel, pasient, reit);
                                                 pasient.leggTilResept(resept);
+                                                reseptListe.leggTil(resept);
                                             }
                                         }
                                     }
@@ -174,6 +177,7 @@ public class Legesystem {
                                                 // oppretter en P resept med legen
                                                 Resept resept = lege.skrivPResept(legemiddel, pasient, reit);
                                                 pasient.leggTilResept(resept);
+                                                reseptListe.leggTil(resept);
                                             }
                                         }
                                     }
@@ -195,6 +199,7 @@ public class Legesystem {
                                                 // oppretter en militær resept med legen
                                                 Resept resept = lege.skrivMilResept(legemiddel, pasient);
                                                 pasient.leggTilResept(resept);
+                                                reseptListe.leggTil(resept);
                                             }
                                         }
                                     }
@@ -220,6 +225,7 @@ public class Legesystem {
 
     }
     
+    // kjører program
     private static void kjorProgram() throws UlovligUtskrift { 
         // starter opp program
         System.out.println("----------  LEGESYSTEM  ----------\n");
@@ -238,7 +244,7 @@ public class Legesystem {
         tastatur.close();
     }
 
-
+    // henter filer fra mappe som har .txt format
     private static void hentDataFiler(final File mappe) {
         System.out.println("\nDet ble funnet følgende datafil(er), tilgjengelig for deg, for innlesing:");
 
@@ -289,7 +295,7 @@ public class Legesystem {
                 break;
 
             case 4:
-                System.out.println(4);
+                hentStatistikk(tastatur); 
                 break;
             
             case 5:
@@ -637,6 +643,79 @@ public class Legesystem {
         System.out.println("Brukte resept paa " + legemiddel.hentNavn() + ". Antall gjenvaerende reit: " + resept.hentReit());
         
     }
+
+    // henter statistikk
+    private static void hentStatistikk(Scanner tastatur) {
+        System.out.println("\n----------  STATISTIKK  ----------\n");
+
+        String utskrift = "";
+        utskrift += "Velg statistikk:\n\n";
+        utskrift += " - Totalt utskrevne resepter paa vanedannende legemidler (1)\n";
+        utskrift += " - Totalt utskrevne resepter paa narkotiske legemidler (2)\n";
+        utskrift += " - Leger som har skrevet ut narkotiske legemidler (3)\n";
+        utskrift += " - Pasienter som har gyldig resept paa narkotiske legemidler (4)\n";
+        System.out.println(utskrift); 
+        int tallValg = tastatur.nextInt();
+
+        switch (tallValg) {
+            case 1:
+                hentResepterMedVannedannendeLegemidler();
+                break;
+            
+            case 2:
+                hentResepterMedNarkotiskeLegemidler();
+                break;
+            
+            case 3:
+                hentLegerMedUtskrevneNarkotiskeResepter();
+                break;
+
+            case 4:
+                hentPasienterMedResepterPaaNarkotiskLegemiddel();
+                break;
+        
+            default:
+                break;
+        }
+    }
+
+    // henter totalt antall resepter med vannedannende legemidler
+    private static void hentResepterMedVannedannendeLegemidler() {
+        // itererer gjennom reseptliste og ser etter vanedannende legemidler
+        int teller = 0;
+        for (Resept resept : reseptListe) if (resept.hentLegemiddel() instanceof Vanedannende) teller++;
+        System.out.println("Totalt antall resepter med vannedannende legemidler: " + teller);
+    }
+
+    // henter totalt antall resepter med narkotiske legemidler
+    private static void hentResepterMedNarkotiskeLegemidler() {
+        // itererer gjennom reseptliste og ser etter narkotiske legemidler
+        int teller = 0;
+        for (Resept resept : reseptListe) if (resept.hentLegemiddel() instanceof Narkotisk) teller++;
+        System.out.println("Totalt antall resepter med narkotiske legemidler: " + teller);
+    }
+
+    // henter alle leger som har skrevet minst en resept med narkotisk legemiddel
+    private static void hentLegerMedUtskrevneNarkotiskeResepter() {
+        // itererer gjennom legeliste
+        for (Lege lege : legeListe) {
+            int teller = 0;
+            IndeksertListe<Resept> resepter = lege.hentUtskrevneResepter();
+            // itererer gjennom resepter for å finne resepter som er narkotiske
+            for (Resept resept : resepter) if (resept.hentLegemiddel() instanceof Narkotisk) teller++;
+            if (teller > 0) System.out.println("\nLege: " + lege.hentNavn() + " - Antall resepter med narkotisk legemiddel: " + teller);
+        }
+    }
+
+    // henter alle pasienter som har minst en resept på et narkotisk legemiddel
+    private static void hentPasienterMedResepterPaaNarkotiskLegemiddel() {
+        // itererer gjennom pasientliste
+        for (Pasient pasient : pasientListe) {
+            int teller = 0;
+            IndeksertListe<Resept> resepter = pasient.hentReseptListe();
+            // itererer gjennom resepter for å finne resepter som er narkotiske
+            for (Resept resept : resepter) if (resept.hentLegemiddel() instanceof Narkotisk) teller++;
+            if (teller > 0) System.out.println("\nPasient: " + pasient.hentNavn() + " (" + pasient.hentFodselsnummer() + ") - Antall resepter med narkotisk legemiddel: " + teller);
+        }
+    }
 }
-
-
