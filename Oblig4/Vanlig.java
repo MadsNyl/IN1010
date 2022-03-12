@@ -4,6 +4,10 @@ public class Vanlig extends Legemiddel {
         super(navn, pris, virkestoff);
     }
 
+    // overskrider hentType metode
+    @Override
+    public String hentType() { return "Vanlig"; }
+
     // overskrider toString metode
     @Override
     public String toString() {

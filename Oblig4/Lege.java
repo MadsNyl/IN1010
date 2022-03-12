@@ -31,6 +31,7 @@ public class Lege implements Comparable<Lege> {
     public HvitResept skrivHvitResept (Legemiddel legemiddel, Pasient pasient, int reit) throws UlovligUtskrift {
         // hvis legemiddelet er narkotisk så kastet en ulovligUtskrift feil
         if (legemiddel instanceof Narkotisk) throw new UlovligUtskrift(this, legemiddel);
+        System.out.println(legemiddel.hentType());
 
         // oppretter et objekt av hvit resept
         HvitResept resept = new HvitResept(legemiddel, this, pasient, reit);

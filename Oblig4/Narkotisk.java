@@ -12,6 +12,10 @@ public class Narkotisk extends Legemiddel {
         return styrke;
     }
 
+    // overskrider hentType metode
+    @Override
+    public String hentType() { return "Narkotisk"; }
+
     // overskrider toString metode
     @Override
     public String toString() {

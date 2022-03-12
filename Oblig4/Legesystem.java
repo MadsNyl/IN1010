@@ -1,4 +1,6 @@
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Legesystem {
@@ -208,6 +210,8 @@ public class Legesystem {
         } catch (FileNotFoundException e) {
             System.out.println("En feil oppsto. Kunne ikke finne filen.");
             e.printStackTrace();
+            System.out.println("\nIngen data ble skrevet inn.");
+            System.out.println("\nStarter opp system.");
         }
 
     }
@@ -215,13 +219,35 @@ public class Legesystem {
     private static void kjorProgram() throws UlovligUtskrift { 
         // starter opp program
         System.out.println("----------  LEGESYSTEM  ----------\n");
-        System.out.println("Skriv inn et filnavn for opplastning: ");
+        
+        // henter .txt filer
+        String mappeSti = Paths.get(".").toAbsolutePath().normalize().toString();
+        final File mappe = new File(mappeSti);
+        hentDataFiler(mappe);
+
+        // opretter en scanner
         Scanner tastatur = new Scanner(System.in);
         String filnavn = tastatur.nextLine();
         lesFil(filnavn);
         kommandoMeny();
         kommandoValg(tastatur);
         tastatur.close();
+    }
+
+
+    private static void hentDataFiler(final File mappe) {
+        System.out.println("\nDet ble funnet følgende datafil(er), tilgjengelig for deg, for innlesing:");
+
+        for (final File fil : mappe.listFiles()) {
+            if (fil.isDirectory()) {
+                hentDataFiler(fil);
+            } else {
+                String filnavn = fil.toString();
+                if (filnavn.contains(".txt")) System.out.println("\n - " + fil.getName());
+            }
+        }
+
+        System.out.println("\nSkriv inn din datafil for innlesing. Hvis din fil ikke kom opp, prøv likevel aa skrive inn filnavn:\n");
     }
 
     // printer ut meny
@@ -239,7 +265,7 @@ public class Legesystem {
     }
 
     // går gjennom menyvalg
-    private static void kommandoValg(Scanner tastatur) {
+    private static void kommandoValg(Scanner tastatur) throws UlovligUtskrift {
         int valgTall = tastatur.nextInt();
         switch (valgTall) {
             case 0:
@@ -297,7 +323,7 @@ public class Legesystem {
     }
 
     // gir bruker mulighet til å opprette objekt av lege, pasient, resept eller legemiddel
-    private static void opprettElement(Scanner tastatur) {
+    private static void opprettElement(Scanner tastatur) throws UlovligUtskrift {
         // skriv ut overskrift
         System.out.println("\n----------  OPPRETT ET ELEMENT  ----------\n");
         String utskrift = "";
@@ -376,8 +402,149 @@ public class Legesystem {
     }
 
     // oppretter et Resept-objekt
-    private static void opprettResept(Scanner tastatur) {
+    private static void opprettResept(Scanner tastatur) throws UlovligUtskrift {
+        // skriver ut overskrift
+        System.out.println("\n----- Oppretter en resept -----\n");
+
+        // sjekker om det eksiterer en lege som kan skrive ut resepten
+        if (legeListe.stoerrelse() <= 0) System.out.println("Det finnes ingen leger som kan opprette en resept for deg. Opprett en lege først.");
+        // sjekker om det eksisterer et legemiddel som kan brukes i resepten
+        if (legemiddelListe.stoerrelse() <= 0) System.out.println("Det finnes ikke noe legemiddel som kan brukes i resepten. Opprett et legemiddel først.");
+        // sjekker om det eksisterer en pasient som kan brukes i resepten
+        if (pasientListe.stoerrelse() <= 0) System.out.println("Det finnes ingen pasient som kan ta imot resepten. Opprett en pasient først.");
+
+
+        // valg av objekter
+        Lege lege = null;
+        Legemiddel legemiddel = null;
+        Pasient pasient = null;
+
+        // viser frem leger
+        System.out.println("\nVelg en lege:");
+        for (Lege element : legeListe) {
+            // sjekker om lege er spesialist
+            boolean erSpesialist = element instanceof Spesialist;
+            if (erSpesialist) System.out.println("\n - " + element.hentNavn() + " (spesialist)");
+            else System.out.println("\n - " + element.hentNavn() + " (lege)");
+        }
+        // velger en lege
+        String legeValg = tastatur.nextLine();
+        for (Lege element : legeListe) {
+            String navn = element.hentNavn().strip();
+            if (legeValg.contains(navn)) lege = element;
+        }
+        if (lege != null) System.out.println("\nDu har valgt følgende lege: " + lege.hentNavn() + ".\n");
+
+        // viser frem pasienter
+        System.out.println("\nVelg en pasient:");
+        for (Pasient element : pasientListe) System.out.println("\n - " + element.hentNavn());
+
+        // velger en pasient
+        String pasientValg = tastatur.nextLine();
+        for (Pasient element : pasientListe) {
+            String navn = element.hentNavn().strip();
+            if (pasientValg.contains(navn)) pasient = element;
+        }
+        if (lege != null) System.out.println("\nDu har valgt følgende pasient: " + pasient.hentNavn() + ".\n");
+
+        // viser frem legemidler
+        System.out.println("\nVelg et legemiddel:");
+        for (Legemiddel element : legemiddelListe) System.out.println("\n - " + element.hentNavn() + " (" + element.hentType() + ")");
+        // velger et legemiddel
+        String legemiddelValg = tastatur.nextLine();
+        for (Legemiddel element : legemiddelListe) {
+            String navn = element.hentNavn().strip();
+            System.out.println(navn);
+            if (legemiddelValg.contains(navn)) legemiddel = element;
+        } 
+        if (legemiddel != null) System.out.println("\nDu har valgt følgende legemiddel: " + legemiddel.hentNavn() + ".\n");
+
+
+        // sjekker hvilken type resept som skal opprettes
+        System.out.println("Hvilken type resept vil du opprette?");
+        String reseptUtvalg = "";
+        reseptUtvalg += "\n - Hvit resept (1)";
+        reseptUtvalg += "\n - Blaa resept (2)";
+        reseptUtvalg += "\n - P resept (3)";
+        reseptUtvalg += "\n - Militaer resept (4)";
+        System.out.println(reseptUtvalg);
+        int reseptValg = tastatur.nextInt();
+        tastatur.nextLine();
+
+        // oppretter de ulike reseptene
+        switch (reseptValg) {
+            case 1:
+                opprettHvitResept(tastatur, lege, legemiddel, pasient);
+                break;
+            
+            case 2:
+                opprettBlaaResept(tastatur, lege, legemiddel, pasient);
+                break;
+            
+            case 3:
+                opprettPResept(tastatur, lege, legemiddel, pasient);
+                break;
+            
+            case 4:
+                opprettMilitaerResept(tastatur, lege, legemiddel, pasient);
+                break;
         
+            default:
+                break;
+        }
+
+
+    }
+
+    // oppretter hvit resept
+    private static void opprettHvitResept(Scanner tastatur, Lege lege, Legemiddel legemiddel, Pasient pasient) throws UlovligUtskrift {
+        System.out.println("\n----- Oppretter hvit resept -----\n");
+        System.out.println("Hvor mange reit skal resepten ha?\n");
+
+        int antallReit = tastatur.nextInt();
+
+        // oppretter en hvit resept
+        Resept resept = lege.skrivHvitResept(legemiddel, pasient, antallReit);
+        reseptListe.leggTil(resept);
+
+        System.out.println("Det er nå opprettet en ny hvit resept.");
+
+    }
+    // oppretter blaa resept
+    private static void opprettBlaaResept(Scanner tastatur, Lege lege, Legemiddel legemiddel, Pasient pasient) throws UlovligUtskrift {
+        System.out.println("\n----- Oppretter blaa resept -----\n");
+        System.out.println("Hvor mange reit skal resepten ha?\n");
+
+        int antallReit = tastatur.nextInt();
+
+        // oppretter en blå resept
+        Resept resept = lege.skrivBlaaResept(legemiddel, pasient, antallReit);
+        reseptListe.leggTil(resept);
+
+        System.out.println("Det er nå opprettet en ny blaa resept.");
+    }
+    // oppretter P resept
+    private static void opprettPResept(Scanner tastatur, Lege lege, Legemiddel legemiddel, Pasient pasient) throws UlovligUtskrift {
+        System.out.println("\n----- Oppretter P resept -----\n");
+        System.out.println("Hvor mange reit skal resepten ha?\n");
+
+        int antallReit = tastatur.nextInt();
+
+        // oppretter en p resept
+        Resept resept = lege.skrivPResept(legemiddel, pasient, antallReit);
+        reseptListe.leggTil(resept);
+
+        System.out.println("Det er nå opprettet en ny P resept.");
+    }
+    // oppretter militaer resept
+    private static void opprettMilitaerResept(Scanner tastatur, Lege lege, Legemiddel legemiddel, Pasient pasient) throws UlovligUtskrift {
+        System.out.println("\n----- Oppretter militaer resept -----\n");
+
+        // oppretter en militær resept
+        Resept resept = lege.skrivMilResept(legemiddel, pasient);
+        reseptListe.leggTil(resept);
+
+        System.out.println("Det er nå opprettet en ny militaer resept.");
     }
 
     // oppretter et Legemiddel-objekt
@@ -406,6 +573,7 @@ public class Legesystem {
             case 1:
                 Vanlig vanlig = new Vanlig(navn, pris, virkestoff);
                 legemiddelListe.leggTil(vanlig);
+                System.out.println("Ditt legemiddel med navn: " + vanlig.hentNavn() + ", er lagt inn i systemet.");
                 break;
 
             case 2:
@@ -413,6 +581,7 @@ public class Legesystem {
                 int styrke = tastatur.nextInt();
                 Vanedannende vanedannende = new Vanedannende(navn, pris, virkestoff, styrke);
                 legemiddelListe.leggTil(vanedannende);
+                System.out.println("Ditt legemiddel med navn: " + vanedannende.hentNavn() + ", er lagt inn i systemet.");
                 break;
             
             case 3:
@@ -420,6 +589,7 @@ public class Legesystem {
                 int styrke_n = tastatur.nextInt();
                 Narkotisk narkotisk = new Narkotisk(navn, pris, virkestoff, styrke_n);
                 legemiddelListe.leggTil(narkotisk);
+                System.out.println("Ditt legemiddel med navn: " + narkotisk.hentNavn() + ", er lagt inn i systemet.");
                 break;
         
             default:

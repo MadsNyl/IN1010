@@ -13,6 +13,10 @@ public class Vanedannende extends Legemiddel {
         return styrke;
     }
 
+    // overskrider hentType metode
+    @Override
+    public String hentType() { return "Vanedannende"; }
+
     // overskrider toString metode
     @Override
     public String toString() {

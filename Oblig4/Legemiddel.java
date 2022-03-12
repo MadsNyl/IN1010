@@ -17,6 +17,9 @@ abstract class Legemiddel {
         id_nummer++;
     }
 
+    // henter type
+    public String hentType() { return "Legemiddel"; }
+
     // henter id
     public int hentId() {
         return id;
