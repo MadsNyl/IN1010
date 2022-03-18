@@ -279,27 +279,33 @@ public class Legesystem {
         switch (valgTall) {
             case 0:
                 System.out.println("Avslutter programvaren.");
+                System.exit(0);
                 break;
 
             case 1:
                 skrivUtOversikt();
-                break;
+                kommandoMeny();
+                kommandoValg(tastatur);
 
             case 2:
                 opprettElement(tastatur);
-                break;
+                kommandoMeny();
+                kommandoValg(tastatur);
             
             case 3:
                 brukResept(tastatur);
-                break;
+                kommandoMeny();
+                kommandoValg(tastatur);
 
             case 4:
-                hentStatistikk(tastatur); 
-                break;
+                hentStatistikk(tastatur);
+                kommandoMeny();
+                kommandoValg(tastatur);
             
             case 5:
                 leggInnData(tastatur);
-                break;
+                kommandoMeny();
+                kommandoValg(tastatur);
         
             default:
                 System.out.println("Feil inntastning, velg et tall mellom 0 og 5.");
@@ -683,7 +689,8 @@ public class Legesystem {
         // itererer gjennom reseptliste og ser etter vanedannende legemidler
         int teller = 0;
         for (Resept resept : reseptListe) if (resept.hentLegemiddel() instanceof Vanedannende) teller++;
-        System.out.println("Totalt antall resepter med vannedannende legemidler: " + teller);
+        if (teller > 0) System.out.println("Totalt antall resepter med vannedannende legemidler: " + teller);
+        else System.out.println("Fant ingen data.");
     }
 
     // henter totalt antall resepter med narkotiske legemidler
@@ -691,7 +698,8 @@ public class Legesystem {
         // itererer gjennom reseptliste og ser etter narkotiske legemidler
         int teller = 0;
         for (Resept resept : reseptListe) if (resept.hentLegemiddel() instanceof Narkotisk) teller++;
-        System.out.println("Totalt antall resepter med narkotiske legemidler: " + teller);
+        if (teller > 0) System.out.println("Totalt antall resepter med narkotiske legemidler: " + teller);
+        else System.out.println("Fant ingen data.");
     }
 
     // henter alle leger som har skrevet minst en resept med narkotisk legemiddel
@@ -703,6 +711,7 @@ public class Legesystem {
             // itererer gjennom resepter for å finne resepter som er narkotiske
             for (Resept resept : resepter) if (resept.hentLegemiddel() instanceof Narkotisk) teller++;
             if (teller > 0) System.out.println("\nLege: " + lege.hentNavn() + " - Antall resepter med narkotisk legemiddel: " + teller);
+            else System.out.println("Fant ingen data.");
         }
     }
 
@@ -715,6 +724,7 @@ public class Legesystem {
             // itererer gjennom resepter for å finne resepter som er narkotiske
             for (Resept resept : resepter) if (resept.hentLegemiddel() instanceof Narkotisk) teller++;
             if (teller > 0) System.out.println("\nPasient: " + pasient.hentNavn() + " (" + pasient.hentFodselsnummer() + ") - Antall resepter med narkotisk legemiddel: " + teller);
+            else System.out.println("Fant ingen data.");
         }
     }
 

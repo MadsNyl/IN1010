@@ -44,13 +44,11 @@ abstract class Lenkeliste<T> implements Liste<T> {
     }
 
     // retunerer størrelse på liste
-    @Override
     public int stoerrelse() {
         return stoerrelse;
     }
 
     // legg til node på slutten av listen
-    @Override
     public void leggTil(T x) {
         Node ny = new Node(x);
         
@@ -68,7 +66,6 @@ abstract class Lenkeliste<T> implements Liste<T> {
     }
 
     // returnerer første element i listen
-    @Override
     public T hent() {
         return start.data;
     }
@@ -89,17 +86,16 @@ abstract class Lenkeliste<T> implements Liste<T> {
     }
 
     // fjerner første element i listen og returnerer det
-    @Override
-    public T fjern() {
+    public T fjern() throws UgyldigListeindeks {
         Node retur;
-        if (stoerrelse == 0) {
-            // hvis listen er tom, returner ingenting
-            throw new UgyldigListeindeks(0);
-        } else if (stoerrelse == 1) {
-            // hvis det kun er ett element i listen
+        
+        // hvis listen er tom, returner ingenting
+        if (stoerrelse == 0) throw new UgyldigListeindeks(0);
+        // hvis det kun er ett element i listen
+        else if (stoerrelse == 1) {
             retur = start;
             start = null;
-            start = null;
+            slutt = null;
         } else {
             // returnerer fjernet element, og flytter listen en plass frem
             retur = start;
@@ -129,27 +125,61 @@ abstract class Lenkeliste<T> implements Liste<T> {
         return svarstreng;
     }
 
+    // legger til node på gitt posisjon
+    public void leggTil (int pos, T x) throws UgyldigListeindeks{
+        Node ny = new Node(x);
 
-    // itererer gjennom listen og returnerer element til gitt posisjon
-    public Node navigoer(int pos) {
-        Node peker = start;
-
-        // hvis pos er utenfor rekkevidde
-        if (pos < 0 || pos > stoerrelse()) {
-            throw new UgyldigListeindeks(pos);
-        } else if (pos == 0) {
-            // hvis posisjon er start
-            peker = start;
-        } else if (pos == stoerrelse() - 1) {
-            // hvis posisjon er slutt
-            peker = slutt;
-        } else {
-            // hvis posisjon er mellom start og slutt
-            for (int i = 0; i < pos; i++) {
-                peker = peker.neste;
-            }
+        if (pos < 0 || pos > stoerrelse) throw new UgyldigListeindeks(pos);
+        
+        else if (pos == stoerrelse){
+            this.leggTil(x);
+            return;
         }
+        else {
+            if (pos == 0) {
+                start.forrige = ny;
+                ny.neste = start;
+                start = ny;
+                stoerrelse++;
+            }
+            else {
+                int teller = 0;
+                Node sjekk = start;
+                while (teller != pos) {
+                    sjekk = sjekk.neste;
+                    teller++;
+                }
+                ny.forrige = sjekk.forrige;
+                ny.neste = sjekk; 
+                sjekk.forrige.neste = ny;
+                sjekk.forrige = ny;
+                stoerrelse++;
+            }
 
-        return peker;
+        }
     }
+
+
+    // // itererer gjennom listen og returnerer element til gitt posisjon
+    // public Node navigoer(int pos) {
+    //     Node peker = start;
+
+    //     // hvis pos er utenfor rekkevidde
+    //     if (pos < 0 || pos > stoerrelse()) {
+    //         throw new UgyldigListeindeks(pos);
+    //     } else if (pos == 0) {
+    //         // hvis posisjon er start
+    //         peker = start;
+    //     } else if (pos == stoerrelse() - 1) {
+    //         // hvis posisjon er slutt
+    //         peker = slutt;
+    //     } else {
+    //         // hvis posisjon er mellom start og slutt
+    //         for (int i = 0; i < pos; i++) {
+    //             peker = peker.neste;
+    //         }
+    //     }
+
+    //     return peker;
+    // }
 }

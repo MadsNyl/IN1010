@@ -13,7 +13,7 @@ public class Narkotisk extends Legemiddel {
 
     // overskrider hentType metode
     @Override
-    public String hentType() { return "Narkotisk"; }
+    public String hentType() { return "narkotisk"; }
 
     // overskrider toString metode
     @Override

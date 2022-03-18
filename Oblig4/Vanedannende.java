@@ -14,7 +14,7 @@ public class Vanedannende extends Legemiddel {
 
     // overskrider hentType metode
     @Override
-    public String hentType() { return "Vanedannende"; }
+    public String hentType() { return "vanedannende"; }
 
     // overskrider toString metode
     @Override

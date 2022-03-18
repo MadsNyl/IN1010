@@ -6,7 +6,7 @@ public class Vanlig extends Legemiddel {
 
     // overskrider hentType metode
     @Override
-    public String hentType() { return "Vanlig"; }
+    public String hentType() { return "vanlig"; }
 
     // overskrider toString metode
     @Override
