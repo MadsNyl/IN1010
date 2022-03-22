@@ -2,9 +2,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
-
-import javax.security.auth.Subject;
-
 import java.io.*;
 
 public class SubsekvensRegister {
@@ -16,6 +13,9 @@ public class SubsekvensRegister {
 
     // hent antall kart
     public int hentAntall() { return register.size(); }
+
+    // hent kart i gitt posisjon
+    public HashMap<String, Subsekvens> hentKart(int pos) { return register.get(pos); }
 
     // sett inn et subsekvenskart
     public void settInn(HashMap<String, Subsekvens> kart) { register.add(kart); }
@@ -38,7 +38,6 @@ public class SubsekvensRegister {
                     kart.put(data, subsekvens);
                 }
             }
-            register.add(kart);
             return kart;
 
         } catch (FileNotFoundException e) {
@@ -54,17 +53,23 @@ public class SubsekvensRegister {
         HashMap<String, Subsekvens> nyttKart = new HashMap<>();
 
         for (String nokkel1 : kart1.keySet()) {
+            nyttKart.put(nokkel1, new Subsekvens(nokkel1, 1));
+            for (String nokkel2 : kart2.keySet()) {
+                nyttKart.put(nokkel2, new Subsekvens(nokkel2, 1));
+            }
+        }
+
+        for (String nokkel1 : kart1.keySet()) {
             int teller = 1;
             for (String nokkel2 : kart2.keySet()) {
                 if (nokkel1.equals(nokkel2)) {
                     teller++;
+                    nyttKart.put(nokkel1, new Subsekvens(nokkel1, teller++));
                 }
-                System.out.println(nokkel1 + " - " + teller);
             }
-            // System.out.println(nokkel1 +  " - " + teller);
         }
         
-        return null;
+        return nyttKart;
     }
 
     // vis alle subsekvenskart (ikke testet)
