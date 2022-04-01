@@ -26,6 +26,7 @@ public class Monitor2 extends SubsekvensRegister{
             if (hentAntall() >= KRAV) {
                 ikkeToFilerKlare.signalAll();
             }
+            System.out.println("Kart satt inn av lesetraad.");
         } finally { laas.unlock(); }
     }
 
@@ -38,6 +39,7 @@ public class Monitor2 extends SubsekvensRegister{
             if (hentAntall() >= KRAV) {
                 ikkeToFilerKlare.signalAll();
             }
+            System.out.println("Flettet kart satt inn av flettetraad.");
         } finally { laas.unlock(); }
     }
 
@@ -47,6 +49,7 @@ public class Monitor2 extends SubsekvensRegister{
         try {
             // tråder venter på at det skal være to tilgjengelige filer
             while (hentAntall() < KRAV) ikkeToFilerKlare.await();
+            System.out.println("To kart hentet ut av flettetraad.");
             // returnerer to filer
             return new Returverdi<HashMap<String,Subsekvens>>(hentUt(), hentUt());
 
@@ -77,6 +80,7 @@ public class Monitor2 extends SubsekvensRegister{
                     nytt_kart.put(nokkel1, new Subsekvens(teller, nokkel1));
                 }
             }
+            System.out.println("To kart slaat sammen av lesetraad.");
             settInnFlettet(nytt_kart);
         } finally { laas.unlock(); }
     }
@@ -91,6 +95,7 @@ public class Monitor2 extends SubsekvensRegister{
                 Scanner input = new Scanner(new File(filnavn));
                 subsekvenser = Reseptor.lagSubsekvenser(input);
             } catch (FileNotFoundException e) { System.out.println("Fant ikke fil."); }
+            System.out.println("konvertert til subsekvenser.");
             return subsekvenser;
         } 
         finally { laas.unlock();}

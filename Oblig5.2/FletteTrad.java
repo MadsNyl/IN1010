@@ -16,11 +16,10 @@ public class FletteTrad implements Runnable{
     @Override
     public void run() {
         try {
+            System.out.println("Flettetraad startet.");
             if (antallFiler > 1) {
                 Returverdi<HashMap<String, Subsekvens>> retur_verdi = monitor.hentUtToKart();
-                System.out.println("Hentet ut to kart. antall er naa: " + monitor.hentAntall());
                 monitor.slaaSammenToKart(retur_verdi.hentVerdi1(), retur_verdi.hentVerdi2());
-                System.out.println("Slått sammen to kart. antall er naa: " + monitor.hentAntall());
             }
             barriere.countDown();
             System.out.println("Flettetraad teller er naa: " + barriere.getCount());

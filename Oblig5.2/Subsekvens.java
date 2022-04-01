@@ -12,6 +12,9 @@ public class Subsekvens {
     // henter antall
     public int hentAntall() { return antall; }
 
+    // hent subsekvens
+    public String hentSubsekvens() { return SUBSEKVENS; }
+
     // endrer antall
     public void endreAntall(int antall) { this.antall = antall; } 
 
