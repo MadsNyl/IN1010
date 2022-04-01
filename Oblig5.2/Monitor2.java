@@ -6,15 +6,16 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.io.*;
 
 public class Monitor2 extends SubsekvensRegister{
-    private static Lock laas;
-    private Condition ikkeToFilerKlare;
+    private static Lock laas = new ReentrantLock(true);
+    private Condition ikkeToFilerKlare = laas.newCondition();
     // private volatile int antallKlare = 0;
     private final int KRAV = 2;
 
-    public Monitor2() {
-        laas = new ReentrantLock(true);
-        ikkeToFilerKlare = laas.newCondition();
-    }
+    // public Monitor2() {
+    //     laas = new ReentrantLock(true);
+    //     ikkeToFilerKlare = laas.newCondition();
+    // }
+
 
     // oversskrider sett inn metode med en lås for trådene
     @Override
@@ -22,7 +23,6 @@ public class Monitor2 extends SubsekvensRegister{
         laas.lock();
         try { 
             beholder.add(kart);
-            System.out.println("Lesetråd setter inn kart. Antall er nå: " + hentAntall());
             if (hentAntall() >= KRAV) {
                 ikkeToFilerKlare.signalAll();
             }
@@ -47,11 +47,6 @@ public class Monitor2 extends SubsekvensRegister{
         try {
             // tråder venter på at det skal være to tilgjengelige filer
             while (hentAntall() < KRAV) ikkeToFilerKlare.await();
-
-            // endrer antall klare filer
-            // antallKlare -= 2;
-
-            
             // returnerer to filer
             return new Returverdi<HashMap<String,Subsekvens>>(hentUt(), hentUt());
 
@@ -82,9 +77,7 @@ public class Monitor2 extends SubsekvensRegister{
                     nytt_kart.put(nokkel1, new Subsekvens(teller, nokkel1));
                 }
             }
-
             settInnFlettet(nytt_kart);
-            // antallKlare++;
         } finally { laas.unlock(); }
     }
 
@@ -98,7 +91,6 @@ public class Monitor2 extends SubsekvensRegister{
                 Scanner input = new Scanner(new File(filnavn));
                 subsekvenser = Reseptor.lagSubsekvenser(input);
             } catch (FileNotFoundException e) { System.out.println("Fant ikke fil."); }
-            System.out.println("Ferdig konvertet.");
             return subsekvenser;
         } 
         finally { laas.unlock();}

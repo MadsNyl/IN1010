@@ -15,7 +15,6 @@ public class LeseTrad implements Runnable {
     // overskrider run metode
     @Override
     public void run() {
-        System.out.println("Lesetråd er startet.");
         HashMap<String, Subsekvens> kart = Monitor2.konverterTilSubsekvenser(FILNAVN);
         monitor.settInn(kart);
         barriere.countDown();

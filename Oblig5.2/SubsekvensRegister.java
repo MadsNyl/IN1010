@@ -21,10 +21,7 @@ public class SubsekvensRegister {
 
     // henter ut antall i beholder
     public int hentAntall() { 
-        laas.lock();
-        try {
-            return beholder.size(); 
-        } finally { laas.unlock(); }
+        return beholder.size(); 
     }
 
     // leser fil med èn persons immunrepertoar og lager en HashMap av subsekvensene i filen, og returnerer HashMapen.
