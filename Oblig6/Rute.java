@@ -33,13 +33,18 @@ abstract class Rute {
         }
     }
 
-    // 
-    public void gaa() {
-        Tupple kordinater = hentKordinater();
-        System.out.println("Y: " + kordinater.hentY() + " X: " + kordinater.hentX());
-        for (Rute nabo : naboer) {
-            nabo.gaa();
+    // finner rute
+    public void finn(Rute fra) {
+        if (fra == null) {
+            
+        } else {
+            
         }
+    }
+
+    // finner vei ut
+    public void finnUtveiFra(int rad, int kol) {
+
     }
 
     // returnerer rutens tegnrepresentasjon

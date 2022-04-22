@@ -5,10 +5,10 @@ public class SortRute extends Rute {
         super(x, y, labyrint);
     }
 
-    // overskrider gaa metode
+    // oversskrider finn metode
     @Override
-    public void gaa() {
-        System.out.println("Sort rute, kan ikke gaa denne veien.");
+    public void finn(Rute fra) {
+        System.out.println("Sort rute");
     }
 
     // implementerer tilTegn metode

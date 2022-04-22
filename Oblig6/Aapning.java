@@ -4,11 +4,10 @@ public class Aapning extends HvitRute {
         super(x, y, labyrint);
     }
 
-    // overskrider gaa metode
+    // overskrider finn metode
     @Override
-    public void gaa() {
-        System.out.println("Funnet aapning.");
-        System.exit(0);
+    public void finn(Rute fra) {
+        System.out.println("Aapning");
     }
     
 }

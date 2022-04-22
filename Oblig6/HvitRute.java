@@ -5,11 +5,10 @@ public class HvitRute extends Rute {
         super(x, y, labyrint);
     }
 
-    // overskrider gaa metode
+    // oversskrider finn metode
     @Override
-    public void gaa() {
-        System.out.println("Hvit rute. Sjekker naboer.");
-        super.gaa();
+    public void finn(Rute fra) {
+        System.out.println("Hvit rute");
     }
 
     // implementerer tilTegn metode

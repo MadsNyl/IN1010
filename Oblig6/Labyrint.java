@@ -86,7 +86,7 @@ public class Labyrint {
                 char representasjon = kart[i][j].tilTegn();
                 utskrift += Character.toString(representasjon);
             }
-            utskrift += "\n";
+            if (i < rader - 1) utskrift += "\n";
         }
 
         return utskrift;
