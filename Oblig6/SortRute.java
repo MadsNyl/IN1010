@@ -8,7 +8,7 @@ public class SortRute extends Rute {
     // oversskrider finn metode
     @Override
     public void finn(Rute fra) {
-        System.out.println("Sort rute");
+        return;
     }
 
     // implementerer tilTegn metode

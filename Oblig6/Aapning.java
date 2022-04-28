@@ -7,7 +7,8 @@ public class Aapning extends HvitRute {
     // overskrider finn metode
     @Override
     public void finn(Rute fra) {
-        System.out.println("Aapning");
+        System.out.println("(" + y + "," + x + ")");
+        return;
     }
     
 }

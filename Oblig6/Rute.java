@@ -1,9 +1,10 @@
 abstract class Rute {
     // kolonne
-    private int x;
+    protected int x;
     // rad
-    private int y;
-    private Labyrint labyrint;
+    protected int y;
+    protected Labyrint labyrint;
+    // protected Rute nord, oest, syd, vest;
     protected Rute[] naboer = new Rute[4];
 
     public Rute(int x, int y, Labyrint labyrint) {
@@ -34,18 +35,7 @@ abstract class Rute {
     }
 
     // finner rute
-    public void finn(Rute fra) {
-        if (fra == null) {
-            
-        } else {
-            
-        }
-    }
-
-    // finner vei ut
-    public void finnUtveiFra(int rad, int kol) {
-
-    }
+    abstract void finn(Rute fra);
 
     // returnerer rutens tegnrepresentasjon
     abstract char tilTegn();

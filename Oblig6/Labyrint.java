@@ -46,6 +46,7 @@ public class Labyrint {
                 Rute oest = null;
                 Rute syd = null;
                 Rute vest = null;
+                
                 // sjekker nabo nord for ruten
                 if (i - 1 >= 0) {
                     nord = kart[i - 1][j];
@@ -90,5 +91,14 @@ public class Labyrint {
         }
 
         return utskrift;
+    }
+
+    // finner vei ut
+    public void finnUtveiFra(int rad, int kol) {
+        if (kart[rad][kol] instanceof SortRute) { 
+            System.out.println("Kan ikke starte i sort rute."); 
+            return;
+        }
+        kart[rad][kol].finn(null);
     }
 }

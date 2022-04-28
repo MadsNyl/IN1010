@@ -1,28 +1,9 @@
 import java.util.HashSet;
 
 public class Reseptor {
- 
-    private final int LENGDE = 3;
-    private String sekvens;
-    // beholder for subsekvensene
-    HashSet<String> subsekvenser = new HashSet<>();
-
-    // konstruktør
-    public Reseptor(String sekvens) {
-        this.sekvens = sekvens;
-    }
-
-    // henter lengde
-    public int hentLengde() { return LENGDE; }
-
-    // henter sekvens
-    public String hentSekvens() { return sekvens; }
-
-    // henter subsekvenser
-    public HashSet<String> hentSubsekvenser() { return subsekvenser; }
-
     // splitter opp sekvens til subsekvenser
-    public void opprettSubsekvenser() {
+    public static HashSet<String> opprettSubsekvenser(String sekvens) {
+        HashSet<String> subsekvenser = new HashSet<>();
         int teller = 0;
         for (int i = 0; i < sekvens.length(); i++) {
             teller++;
@@ -37,6 +18,8 @@ public class Reseptor {
                 subsekvenser.add(subsekvens);
             }
         }
+
+        return subsekvenser;
     }
 
 }

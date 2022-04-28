@@ -30,9 +30,7 @@ public class SubsekvensRegister {
             Scanner sc = new Scanner(new File(filnavn));
             while (sc.hasNextLine()) {
                 String sekvens = sc.nextLine();
-                Reseptor reseptor = new Reseptor(sekvens);
-                reseptor.opprettSubsekvenser();
-                HashSet<String> subsekvenser = reseptor.hentSubsekvenser();
+                HashSet<String> subsekvenser = Reseptor.opprettSubsekvenser(sekvens);
                 for (String data : subsekvenser) {
                     Subsekvens subsekvens = new Subsekvens(data, 1);
                     kart.put(data, subsekvens);
@@ -52,20 +50,24 @@ public class SubsekvensRegister {
     public static HashMap<String, Subsekvens> slaaSammen(HashMap<String, Subsekvens> kart1, HashMap<String, Subsekvens> kart2) {
         HashMap<String, Subsekvens> nyttKart = new HashMap<>();
 
-        for (String nokkel1 : kart1.keySet()) {
-            nyttKart.put(nokkel1, new Subsekvens(nokkel1, 1));
-            for (String nokkel2 : kart2.keySet()) {
-                nyttKart.put(nokkel2, new Subsekvens(nokkel2, 1));
-            }
+        for (String nokkel2 : kart2.keySet()) {
+            Subsekvens subsekvens = kart2.get(nokkel2);
+            nyttKart.put(nokkel2, new Subsekvens(nokkel2, subsekvens.hentAntall()));
         }
 
         for (String nokkel1 : kart1.keySet()) {
-            int teller = 1;
+            Subsekvens subsekvens1 = kart1.get(nokkel1);
+            int teller = subsekvens1.hentAntall();
+
             for (String nokkel2 : kart2.keySet()) {
+                Subsekvens subsekvens2 = kart2.get(nokkel2);
+                int antall = subsekvens2.hentAntall();
+
                 if (nokkel1.equals(nokkel2)) {
-                    teller++;
-                    nyttKart.put(nokkel1, new Subsekvens(nokkel1, teller++));
+                    teller += antall;
                 }
+
+                nyttKart.put(nokkel1, new Subsekvens(nokkel1, teller));
             }
         }
         
@@ -76,6 +78,7 @@ public class SubsekvensRegister {
     public void visAlleSubsekvensKart() {
         for (HashMap<String, Subsekvens> kart : register) {
             System.out.println(kart);
+            System.out.println("\n----------\n");
         }
     }
 
