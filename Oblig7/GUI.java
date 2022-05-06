@@ -43,6 +43,38 @@ public class GUI {
             }
         }
 
+        // beveg slange oppover
+        class Opp implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                kontroller.oppdaterBevegelse("opp");
+            }
+        }
+
+        // beveg slange til hoyre
+        class Hoyre implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                kontroller.oppdaterBevegelse("hoyre");
+            }
+        }
+
+        // beveg slange nedover
+        class Ned implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                kontroller.oppdaterBevegelse("ned");
+            }
+        }
+
+        // beveg slange til venstre
+        class Venstre implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                kontroller.oppdaterBevegelse("venstre");
+            }
+        }
+
         /*
             SETTER OPP SPILLVINDU
         */
@@ -78,12 +110,16 @@ public class GUI {
 
         // setter opp styring
         opp = new JButton("Opp");
+        opp.addActionListener(new Opp());
 
         hoyre = new JButton("Hoyre");
+        hoyre.addActionListener(new Hoyre());
 
         ned = new JButton("Ned");
+        ned.addActionListener(new Ned());
 
         venstre = new JButton("Venstre");
+        venstre.addActionListener(new Venstre());
 
         kontroll.add(opp, BorderLayout.NORTH);
         kontroll.add(hoyre, BorderLayout.EAST);
@@ -125,13 +161,16 @@ public class GUI {
     public void tegnStartBrett() {
         for (int rad = 0; rad < GRID; rad++) {
             for (int kol = 0; kol < GRID; kol++) {
-                if (rad != 6 || kol != 6) ruter[rad][kol].setText("");
-                else {
-                    ruter[rad][kol].setText("x");
-                    kontroller.forlengSlange(new Slange(rad, kol, true));
-                }
+                ruter[rad][kol].setText("");
             }
         }
+
+        ruter[6][6].setText("x");
+        ruter[7][6].setText("x");
+        ruter[8][6].setText("x");
+        kontroller.forlengSlange(new Slange(6, 6, true));
+        kontroller.forlengSlange(new Slange(7, 6, false));
+        kontroller.forlengSlange(new Slange(8, 6, false));
     }
 
     // tegner brettet om igjen
@@ -140,14 +179,15 @@ public class GUI {
 
         for (int rad = 0; rad < GRID; rad++) {
             for (int kol = 0; kol < GRID; kol++) {
-                for (Slange del : slange) {
-                    int slange_rad = del.hentRad();
-                    int slange_kol = del.hentKolonne();
-
-                    if (rad == slange_rad && kol == slange_kol) ruter[rad][kol].setText("x");
-                    else ruter[rad][kol].setText("");
-                }
+                ruter[rad][kol].setText("");
             }
         }
+
+        for (Slange del : slange) {
+            int slange_rad = del.hentRad();
+            int slange_kolonne = del.hentKolonne();
+            ruter[slange_rad][slange_kolonne].setText("x");;
+        }
+        System.out.println(slange);
     }
 }

@@ -93,4 +93,16 @@ public class Koe<T> implements Iterable<T> {
         }
         storrelse--;
     }
+
+    @Override
+    public String toString() { 
+        String utskrift = "[";
+        int teller = 0;
+        for (T e : this) {
+            if (teller != storrelse - 1) utskrift += e + " , ";
+            else utskrift += e;
+        }
+        utskrift += "]";
+        return utskrift;
+    }
 }

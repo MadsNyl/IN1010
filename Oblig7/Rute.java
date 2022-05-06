@@ -11,4 +11,9 @@ public class Rute {
 
     public int hentKolonne() { return kolonne; }
 
+    public void endreRad(int rad) { this.rad = rad; }
+
+    public void endreKolonne(int kolonne) { this.kolonne = kolonne; }
+
+
 }
