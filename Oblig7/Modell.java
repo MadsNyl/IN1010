@@ -35,26 +35,61 @@ public class Modell {
 
     // beveg slange
     public void beveg(String retning) {
+        Slange ny;
+        int lavest_rad = 12;
+        int lavest_kolonne = 12;
+        int hoyest_kolonne = 0;
+        int hoyest_rad = 0;
+
         switch (retning) {
             case "opp":
-                // for (int i = 0; i < slange.storrelse(); i++) {
-                //     if (i != slange.storrelse() - 1) {
-                //         slange.hent(i).endreRad(slange.hent(i + 1).hentRad());
-                //         slange.hent(i).endreKolonne(slange.hent(i + 1).hentKolonne());
-                //     }
-                // }
-                hentHode().beveg("opp");
-                // slange.leggTil(new Slange(hentHode().hentRad(), hentHode().hentKolonne(), true));                   
-                // slange.fjern();
+
+                // finn verdier
+                for (Slange del : slange) {
+                    if (del.hentRad() < lavest_rad && !slange.hent(slange.storrelse() - 1).equals(del)) lavest_rad = del.hentRad();
+                    // if (del.hentKolonne() > hoyest_kolonne) hoyest_kolonne = del.hentKolonne();
+                }
+
+                ny = new Slange(lavest_rad - 1, slange.hent(0).hentKolonne(), true);
+           
+                
+                slange.fjern();
+                slange.leggTil(ny); 
                 break;
             case "hoyre":
-                hentHode().beveg("hoyre");
+                // finn verdier
+                for (Slange del : slange) {
+                    if (del.hentKolonne() > hoyest_kolonne && !slange.hent(slange.storrelse() - 1).equals(del)) hoyest_kolonne = del.hentKolonne();
+                }
+
+                ny = new Slange(slange.hent(0).hentRad(), hoyest_kolonne + 1, true);
+
+                slange.fjern();
+                slange.leggTil(ny);
                 break;
             case "ned":
-                hentHode().beveg("ned");
+
+                // finn verdier
+                for (Slange del : slange) {
+                    if (del.hentRad() > hoyest_rad && !slange.hent(slange.storrelse() - 1).equals(del)) hoyest_rad = del.hentRad();
+                }
+
+                ny = new Slange(hoyest_rad + 1, slange.hent(0).hentKolonne(), true);
+        
+                
+                slange.fjern();
+                slange.leggTil(ny);
                 break;
             case "venstre":
-                hentHode().beveg("venstre");
+                // finn verdier
+                for (Slange del : slange) {
+                    if (del.hentKolonne() < lavest_kolonne && !slange.hent(slange.storrelse() - 1).equals(del)) lavest_kolonne = del.hentKolonne();
+                }
+
+                ny = new Slange(slange.hent(0).hentRad(), lavest_kolonne - 1, true);
+
+                slange.fjern();
+                slange.leggTil(ny);
                 break;
         }
     }

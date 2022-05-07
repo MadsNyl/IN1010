@@ -6,27 +6,34 @@ public class Slange extends Rute {
         this.erHode = erHode;
     }
 
-    public boolean beveg(String retning) {
+    public Koe<Slange> beveg(String retning, Koe<Slange> slange) {
         switch (retning) {
             case "opp":
                 // if (rad - 1 < 0) return false;
-                rad--;
                 System.out.println("rad: " + rad);
-                return true;
+                for (int i = 0; i < slange.storrelse(); i++) {
+                    if (i != slange.storrelse() - 1) {
+                        slange.hent(i).endreRad(slange.hent(i + 1).hentRad());
+                        slange.hent(i).endreKolonne(slange.hent(i + 1).hentKolonne());
+                    }
+                }
+                rad--;
+                Koe<Slange> retur = slange;
+                return retur;
             case "hoyre":
                 // if (kolonne + 1 > GRID - 1) return false;
                 kolonne++;
-                return true;
+                return null;
             case "ned":
                 // if (rad + 1 > GRID - 1) return false;
                 rad++;
-                return true;
+                return null;
             case "venstre":
                 // if (kolonne - 1 < 0) return false;
                 kolonne--;
-                return true;
+                return null;
             default:
-                return false;
+                return null;
         }
     }
 

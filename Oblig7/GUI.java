@@ -168,9 +168,9 @@ public class GUI {
         ruter[6][6].setText("x");
         ruter[7][6].setText("x");
         ruter[8][6].setText("x");
-        kontroller.forlengSlange(new Slange(6, 6, true));
+        kontroller.forlengSlange(new Slange(8, 6, true));
         kontroller.forlengSlange(new Slange(7, 6, false));
-        kontroller.forlengSlange(new Slange(8, 6, false));
+        kontroller.forlengSlange(new Slange(6, 6, false));
     }
 
     // tegner brettet om igjen
