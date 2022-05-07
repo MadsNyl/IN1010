@@ -165,29 +165,49 @@ public class GUI {
             }
         }
 
+
+
         ruter[6][6].setText("x");
-        ruter[7][6].setText("x");
-        ruter[8][6].setText("x");
-        kontroller.forlengSlange(new Slange(8, 6, true));
-        kontroller.forlengSlange(new Slange(7, 6, false));
-        kontroller.forlengSlange(new Slange(6, 6, false));
+        kontroller.forlengSlange(new Slange(6, 6));
+
+        // tegn inn skatter
+        for (int i = 0; i < ANTALLSKATTER; i++) {
+            int skatt_rad = 0;
+            int skatt_kolonne = 0;
+            while ((skatt_rad != 6 && skatt_kolonne != 6) || ruter[skatt_rad][skatt_kolonne].getText().equals("$")) {
+                skatt_rad = Skatt.trekk(0, GRID - 1);
+                skatt_kolonne = Skatt.trekk(0, GRID - 1);
+                if ((skatt_rad != 6 && skatt_kolonne != 6) || ruter[skatt_rad][skatt_kolonne].getText().equals("$")) break;
+            }
+            ruter[skatt_rad][skatt_kolonne].setText("$");
+            Skatt ny = new Skatt(skatt_rad, skatt_kolonne);
+            kontroller.leggTilSkatt(i, ny);
+        }
+        
     }
 
     // tegner brettet om igjen
     public void tegnBrettOmIgjen() {
         Koe<Slange> slange = kontroller.hentSlange();
+        Skatt[] skatter = kontroller.hentSkatter();
 
         for (int rad = 0; rad < GRID; rad++) {
             for (int kol = 0; kol < GRID; kol++) {
                 ruter[rad][kol].setText("");
             }
         }
+        
+        for (int i = 0; i < skatter.length; i++) {
+            if (skatter[i] != null) ruter[skatter[i].hentRad()][skatter[i].hentKolonne()].setText("$");
+        }
 
         for (Slange del : slange) {
             int slange_rad = del.hentRad();
             int slange_kolonne = del.hentKolonne();
-            ruter[slange_rad][slange_kolonne].setText("x");;
+            ruter[slange_rad][slange_kolonne].setText("x");
         }
-        System.out.println(slange);
+        
+
+        // System.out.println(slange);
     }
 }

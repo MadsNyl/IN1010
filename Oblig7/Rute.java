@@ -15,5 +15,6 @@ public class Rute {
 
     public void endreKolonne(int kolonne) { this.kolonne = kolonne; }
 
-
+    @Override
+    public String toString() { return "(" + rad + "," + kolonne + ")"; }
 }

@@ -34,8 +34,14 @@ public class Kontroller {
     // henter slange
     public Koe<Slange> hentSlange() { return modell.hentSlange(); }
 
-    // henter hode
-    public Slange hentHode() { return modell.hentHode(); }
+    // henter skatter
+    public Skatt[] hentSkatter() { return modell.hentSkatter(); }
+
+    // legg til skatt
+    public void leggTilSkatt(int pos, Skatt skatt) { modell.leggTilSkatt(pos, skatt); }
+
+    // fjern skatt
+    public void fjernSkatt(int pos) { modell.fjernSkatt(pos); }
 
     // forlenger slange
     public void forlengSlange(Slange del) { modell.forlengSlange(del); }
@@ -46,13 +52,8 @@ public class Kontroller {
     // oppdaterer elementer i spillet
     public void oppdater() {
         beveg();
-        kollisjon();
     }
 
-    // se etter kollisjon med vegger
-    public void kollisjon() { 
-        if (hentHode().hentRad() < 0 || hentHode().hentRad() > GRID - 1 || hentHode().hentKolonne() < 0 || hentHode().hentKolonne() > GRID - 1) modell.avsluttSpill();
-    }
 
     // beveger slangen
     public void beveg() {
