@@ -17,7 +17,6 @@ public class GUI {
     private JPanel hovedpanel, panel, rutenett, kontroll, info;
     private JButton avslutt, opp, hoyre, ned, venstre;
     private JLabel slangelengde;
-    private int halelengde = 1;
     private JLabel ruter[][] = new JLabel[GRID][GRID];
 
     // setter opp gui
@@ -98,7 +97,7 @@ public class GUI {
         info.setLayout(new GridBagLayout());
         info.setPreferredSize(new Dimension(BRETTBREDDE / 4, KONTROLLPANELHOYDE));
         info.setBorder(BorderFactory.createLineBorder(Color.black, 1));
-        slangelengde = new JLabel(" " + halelengde + " ");
+        slangelengde = new JLabel();
         info.add(slangelengde);
         panel.add(info, BorderLayout.WEST);
 
@@ -167,8 +166,8 @@ public class GUI {
 
 
 
-        ruter[6][6].setText("x");
-        kontroller.forlengSlange(new Slange(6, 6));
+        ruter[6][6].setText("O");
+        kontroller.forlengSlange(new Slange(6, 6, true));
 
         // tegn inn skatter
         for (int i = 0; i < ANTALLSKATTER; i++) {
@@ -204,10 +203,11 @@ public class GUI {
         for (Slange del : slange) {
             int slange_rad = del.hentRad();
             int slange_kolonne = del.hentKolonne();
-            ruter[slange_rad][slange_kolonne].setText("x");
+            if (del.erHode()) ruter[slange_rad][slange_kolonne].setText("O");
+            else ruter[slange_rad][slange_kolonne].setText("x");
         }
         
-
+        slangelengde.setText(" " + kontroller.hentHalelengde() + " ");
         // System.out.println(slange);
     }
 }

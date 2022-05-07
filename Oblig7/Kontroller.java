@@ -3,7 +3,7 @@ public class Kontroller {
     private Modell modell;
     private boolean gaarOpp, gaarHoyre, gaarNed, gaarVenstre;
 
-    private final int DELAY = 2000;
+    private final int DELAY = 1000;
     private final int GRID = 12;
 
     public Kontroller() {
@@ -34,6 +34,9 @@ public class Kontroller {
     // henter slange
     public Koe<Slange> hentSlange() { return modell.hentSlange(); }
 
+    // henter halelengde
+    public int hentHalelengde() { return modell.hentHalelengde(); }
+
     // henter skatter
     public Skatt[] hentSkatter() { return modell.hentSkatter(); }
 
@@ -46,12 +49,16 @@ public class Kontroller {
     // forlenger slange
     public void forlengSlange(Slange del) { modell.forlengSlange(del); }
 
+    // ser etter kollisjon med egen hale
+    public void treffHale() { modell.treffHale(); }
+
     // avslutter spill
     public void avsluttSpill() { System.exit(0); }
 
     // oppdaterer elementer i spillet
     public void oppdater() {
         beveg();
+        treffHale();
     }
 
 
