@@ -107,6 +107,8 @@ public class Modell {
 
         switch (retning) {
             case "opp":
+                if (hentHode().hentRad() - 1 < 0) avsluttSpill();
+            
                 if (slange.storrelse() == 1) {
                     ny = new Slange(hentHode().hentRad() - 1, hentHode().hentKolonne(), true);
                     if (!kollisjon()) slange.fjern();
@@ -122,6 +124,8 @@ public class Modell {
                 break;
 
             case "hoyre":
+                if (hentHode().hentKolonne() + 1 > 11) avsluttSpill();
+                
                 if (slange.storrelse() == 1) {
                     ny = new Slange(hentHode().hentRad(), hentHode().hentKolonne() + 1, true);
                     if (!kollisjon()) slange.fjern();
@@ -137,6 +141,8 @@ public class Modell {
                 break;
 
             case "ned":
+                if (hentHode().hentRad() + 1 > 11) avsluttSpill();
+
                 if (slange.storrelse() == 1) {
                     ny = new Slange(hentHode().hentRad() + 1, hentHode().hentKolonne(), true);
                     if (!kollisjon()) slange.fjern();
@@ -152,6 +158,8 @@ public class Modell {
                 break;
                 
             case "venstre":
+                if (hentHode().hentKolonne() - 1 < 0) avsluttSpill();
+
                 if (slange.storrelse() == 1) {
                     ny = new Slange(hentHode().hentRad(), hentHode().hentKolonne() - 1, true);
                     if (!kollisjon()) slange.fjern();

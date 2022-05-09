@@ -3,7 +3,7 @@ public class Kontroller {
     private Modell modell;
     private boolean gaarOpp, gaarHoyre, gaarNed, gaarVenstre;
 
-    private final int DELAY = 1000;
+    private final int DELAY = 500;
     private final int GRID = 12;
 
     public Kontroller() {
@@ -22,6 +22,7 @@ public class Kontroller {
         while (modell.spillKjorer()) {
             Thread.sleep(DELAY);
             oppdater();
+            if (!modell.spillKjorer()) break;
             gui.tegnBrettOmIgjen();
         }
     }
@@ -36,6 +37,9 @@ public class Kontroller {
 
     // henter halelengde
     public int hentHalelengde() { return modell.hentHalelengde(); }
+
+    // henter hode
+    public Slange hentHode() { return modell.hentHode(); }
 
     // henter skatter
     public Skatt[] hentSkatter() { return modell.hentSkatter(); }
