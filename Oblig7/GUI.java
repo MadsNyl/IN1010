@@ -141,7 +141,7 @@ public class GUI {
 
         for (int rad = 0; rad < GRID; rad++) {
             for (int kol = 0; kol < GRID; kol++) {
-                JLabel rute = new JLabel("");
+                JLabel rute = new JLabel("", SwingConstants.CENTER);
                 rute.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
                 ruter[rad][kol] = rute;
                 rute.setFont(new Font(Font.MONOSPACED, Font.BOLD, 30));
