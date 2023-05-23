@@ -25,6 +25,7 @@ while kjor:
     frukt.tegn()
     rutenett.tegn()
     slange.tegn()
+    slange.tegn_hale()
 
     # ser etter trykk paa exit-knapp
     for event in pg.event.get():
@@ -39,11 +40,10 @@ while kjor:
         slange.legg_til_hale(hale_del)
     
     slange.beveg()
+    slange.oppdater_hale()
     
     # oppdaterer elementer paa brettet
     slange.oppdater()
-    slange.oppdater_hale()
-    slange.tegn_hale()
 
     pg.display.update()
 

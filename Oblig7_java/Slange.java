@@ -18,6 +18,10 @@ public class Slange {
 
     public int hentKolonne() { return kol; }
 
+    public void endreRad(int rad) { this.rad = rad; }
+
+    public void endreKolonne(int kol) { this.kol = kol; }
+
     // tegner slange paa brettet
     public void tegn() {
         gui.viskUtSlange(rad, kol);

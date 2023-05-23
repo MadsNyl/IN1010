@@ -32,7 +32,7 @@ public class Modell {
     public Koe<Slange> hentSlange() { return slange; }
 
     // returnerer hode til slange
-    public Slange hentHode() { return slange.hent(0); }
+    public Slange hentHode() { return slange.hent(slange.storrelse() - 1); }
 
     // returnerer skatter
     public Skatt[] hentSkatter() { return skatter; }
@@ -46,19 +46,30 @@ public class Modell {
 
     // tegner slangen
     public void tegnSlange() {
-        for (Slange del : slange) {
-            del.tegn();
+        for (int i = 0; i < slange.storrelse(); i++) {
+            if (i != slange.storrelse() - 1) {
+                slange.hent(i).endreRad(slange.hent(i + 1).hentRad());
+                slange.hent(i).endreKolonne(slange.hent(i + 1).hentKolonne());
+                System.out.println(slange.hent(i) + " " + i);
+                slange.hent(i).tegn();
+            }
         }
+
+        slange.fjern();
     }
 
     // oker teller for lengden til slangen
     public void oekSlangeLengde() {  gui.oekHalelengde(); }
-
+ 
     // oppretter hode til slangen
     public void opprettStartElementer() {
-        skatter = gui.tegnSkatter();
+        // skatter = gui.tegnSkatter();
         Slange hode = new Slange(gui, 6, 6, true);
+        Slange del1 = new Slange(gui, 7, 6, false);
+        Slange del2 = new Slange(gui, 8, 6, false);
         slange.leggTil(hode);
+        slange.leggTil(del1);
+        slange.leggTil(del2);
     }
 
 }

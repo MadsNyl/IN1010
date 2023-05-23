@@ -14,15 +14,16 @@ class Slange:
         pg.draw.rect(self.vindu, GUL, (RUTESTORRELSE * self.x, RUTESTORRELSE * self.y, RUTESTORRELSE, RUTESTORRELSE))
     
     def tegn_hale(self):
-        for hale in self.hale:
-            hale.tegn()
+        for i, hale in enumerate(self.hale):
+            if (i != 0):
+                hale.tegn()
+            
 
     def oppdater_hale(self):
         for i, hale in enumerate(self.hale):
             if (i != 0):
                 hale.x = self.hale[i - 1].x
                 hale.y = self.hale[i - 1].y
-
 
     # ser etter input fra tastatur
     def beveg(self):
@@ -43,6 +44,7 @@ class Slange:
          
     # oppdaterer posisjon til slangehode
     def oppdater(self):
+        # self.oppdater_hale()
         self.kollisjon()
         self.x += self.vel_x
         self.y += self.vel_y

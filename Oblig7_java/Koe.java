@@ -54,22 +54,32 @@ public class Koe<T> implements Iterable<T> {
         return node.data;
     }
 
-    // legger til element i slutten av listen
+    // legger til element i starten av listen
     public void leggTil(T data) {
         Node ny = new Node(data);
 
         if (start == null) {
             start = ny;
-        } else {
-            ny.forrige = slutt;
-            slutt.neste = ny;
+            slutt = ny;
+            start.neste = ny;
+            slutt.forrige = ny;
+        } 
+        else if (storrelse() == 1) {
+            start.neste = null;
+            ny.neste = slutt;
+            slutt.forrige = ny;
+            start = ny;
+        }
+        else {
+            start.forrige = ny;
+            ny.neste = start;
+            start = ny;
         }
 
-        slutt = ny;
         storrelse++;
     }
 
-    // fjern forste element i listen
+    // fjern siste element i listen
     public void fjern() {
         if (storrelse == 0) { throw new IndexOutOfBoundsException(); }
         else if (storrelse == 1) {
@@ -78,8 +88,8 @@ public class Koe<T> implements Iterable<T> {
             start = null;
             slutt = null;
         } else {
-            start.neste.forrige = null;
-            start = start.neste;
+            slutt.forrige.neste = null;
+            slutt = slutt.forrige;
         }
         storrelse--;
     }

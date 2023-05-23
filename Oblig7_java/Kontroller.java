@@ -13,12 +13,14 @@ public class Kontroller {
     public void startSpill() throws InterruptedException {
         modell.opprettStartElementer();
         gui.tegnSlange(6, 6);
+        gui.tegnSlange(7, 6);
+        gui.tegnSlange(8, 6);
         // game loop
         while (modell.erSpillFerdig()) {
             Thread.sleep(FART);
             bevegSlange();
             if (gaarOpp || gaarHoyre || gaarNed || gaarVenstre) modell.tegnSlange();
-            truffetSkatt();
+            // truffetSkatt();
         }
     }
 
@@ -43,6 +45,20 @@ public class Kontroller {
                 modell.fjernSkatt(skatter[i]);
                 Skatt ny_skatt = gui.tegnSkatt();
                 skatter[i] = ny_skatt;
+            }
+        }   
+    }
+
+    // ser etter kollisjon med hale
+    public void kollisjonMedHale() {
+        Koe<Slange> slange = modell.hentSlange();
+        if (slange.storrelse() > 1) {
+            for (int i = 0; i < slange.storrelse(); i++) {
+                if (i != 0) {
+                    if ((slange.hent(0).hentRad() == slange.hent(i).hentRad()) && (slange.hent(0).hentKolonne() == slange.hent(i).hentKolonne())) {
+                        kollisjon();
+                    } 
+                }
             }
         }   
     }
